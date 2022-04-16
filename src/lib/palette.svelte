@@ -2,6 +2,8 @@
 	import PaletteColor from './palette-color.svelte';
 	export let palette: string[] = [];
 	export let selectedPaletteIndex = 0;
+
+	console.log(selectedPaletteIndex);
 </script>
 
 <div>
@@ -9,7 +11,10 @@
 		<PaletteColor
 			bind:palette
 			paletteIndex={i}
-			on:click={() => (selectedPaletteIndex = i)}
+			handleClick={() => {
+				console.log(i);
+				return (selectedPaletteIndex = i);
+			}}
 			isSelected={selectedPaletteIndex === i}
 		/>
 	{/each}
