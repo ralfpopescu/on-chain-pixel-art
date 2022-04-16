@@ -19,7 +19,7 @@
 			while (
 				color === initialColor &&
 				pixel + colorCount <= canvas.length &&
-				colorCount <= 2 ** pixelCompression
+				colorCount < 2 ** pixelCompression
 			) {
 				console.log('loopin');
 				colorCount += 1;
@@ -30,6 +30,8 @@
 
 			packets.push({ colorIndex: initialColor, numberOfPixels: colorCount });
 		}
+
+		return packets;
 	};
 
 	$: packets = compressColors(2, colors);
