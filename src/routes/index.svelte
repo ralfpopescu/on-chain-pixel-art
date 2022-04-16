@@ -7,15 +7,13 @@
 	let x = 4;
 	let y = 4;
 
-	let colors: string[] = new Array(x * y).fill(null).map((_) => `#${randomColor()}`);
+	let colors: number[] = new Array(x * y).fill(null).map((_) => 0);
 	let palette: string[] = new Array(4).fill(null).map((_) => `#${randomColor()}`);
 	let selectedPaletteIndex = 0;
-
-	$: selectedPaletteColor = palette[selectedPaletteIndex];
 </script>
 
 <div class="flex flex-col">
-	<Canvas xDim={4} yDim={4} bind:colors {selectedPaletteColor} />
+	<Canvas xDim={4} yDim={4} bind:colors {selectedPaletteIndex} {palette} />
 	<Palette bind:palette bind:selectedPaletteIndex />
 	<button>add color</button>
 </div>
