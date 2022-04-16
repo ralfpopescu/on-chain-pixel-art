@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Canvas from '$lib/canvas.svelte';
 	import Palette from '$lib/palette.svelte';
+	import Code from '$lib/code.svelte';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -16,4 +17,5 @@
 	<Canvas xDim={4} yDim={4} bind:colors {selectedPaletteIndex} {palette} />
 	<Palette bind:palette bind:selectedPaletteIndex />
 	<button>add color</button>
+	<Code {colors} />
 </div>
