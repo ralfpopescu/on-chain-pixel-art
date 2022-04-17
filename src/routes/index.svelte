@@ -5,8 +5,8 @@
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
-	let x = 4;
-	let y = 4;
+	let x = 20;
+	let y = 20;
 
 	let colors: number[] = new Array(x * y).fill(null).map((_) => 0);
 	let palette: string[] = new Array(4).fill(null).map((_) => `#${randomColor()}`);
@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex flex-col">
-	<Canvas xDim={4} yDim={4} bind:colors {selectedPaletteIndex} {palette} />
+	<Canvas xDim={x} yDim={y} bind:colors {selectedPaletteIndex} {palette} />
 	<Palette bind:palette bind:selectedPaletteIndex />
 	<button>add color</button>
 	<Code {colors} />
