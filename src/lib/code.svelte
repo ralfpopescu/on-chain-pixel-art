@@ -89,22 +89,22 @@
 		return `0x${converted}`;
 	};
 
-	const binaryToUint256 = (binary: string) => {
-		if (binary.length <= 256) return [binaryToHex(binary)];
+	const binaryToUint256 = (binary: string, pixelCompression: number, colorCompression: number) => {
+		const maxBits = 256 - (256 % (pixelCompression + colorCompression));
+		console.log({ maxBits });
+
+		if (binary.length <= maxBits) return [binaryToHex(binary)];
 
 		const uint256s = [];
 		let binaryReduction = binary;
-
 		let processing = true;
 		let maxIterations = 0;
 
 		while (processing && maxIterations < 256) {
-			const slice = binaryReduction.slice(binaryReduction.length - 256, binaryReduction.length);
-			binaryReduction = binaryReduction.slice(0, binaryReduction.length - 256);
+			const slice = binaryReduction.slice(binaryReduction.length - maxBits, binaryReduction.length);
+			binaryReduction = binaryReduction.slice(0, binaryReduction.length - maxBits);
 
-			console.log(slice, binaryToHex(slice));
-
-			if (binaryReduction.length < 256) {
+			if (binaryReduction.length <= maxBits) {
 				processing = false;
 				uint256s.push(binaryToHex(binaryReduction));
 			}
@@ -116,14 +116,14 @@
 		return uint256s;
 	};
 
-	$: packets = compressColors(4, colors);
+	$: packets = compressColors(7, colors);
 
 	console.log(packets);
 </script>
 
 <div>
 	{console.log('render')}
-	{JSON.stringify(packets)} total bits: {packets.length * (4 + 3)} naive: {colors.length * 3}
-	{JSON.stringify(packetsToBinary(packets, 4, 3))}
-	{JSON.stringify(binaryToUint256(packetsToBinary(packets, 4, 3)))}
+	{JSON.stringify(packets)} total bits: {packets.length * (6 + 1)} naive: {colors.length * 3}
+	{JSON.stringify(packetsToBinary(packets, 6, 1))}
+	{JSON.stringify(binaryToUint256(packetsToBinary(packets, 6, 1), 6, 3))}
 </div>
