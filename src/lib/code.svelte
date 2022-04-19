@@ -1,5 +1,19 @@
 <script lang="ts">
 	export let colors: number[];
+	export let palette;
+
+	let compression = 4;
+
+	const getColorCompression = (numberOfColors: number) => {
+		let c = 0;
+		console.log({ a: 2 ** c, b: numberOfColors });
+		while (2 ** c - 1 < numberOfColors) {
+			c += 1;
+		}
+		return c;
+	};
+
+	$: colorCompression = getColorCompression(palette.length);
 
 	type Packet = {
 		colorIndex: number;
@@ -32,7 +46,7 @@
 		return packets;
 	};
 
-	const packetsToBinary = (p: Packet[], pixelCompression: number, colorCompression: number) => {
+	const packetsToBinary = (p: Packet[], pixelCompression: number) => {
 		const result = p
 			.map(({ colorIndex, numberOfPixels }) => {
 				const paddedColor = colorIndex.toString(2).padStart(colorCompression, '0');
@@ -76,8 +90,6 @@
 			const end = paddedBinary.length - i * 4;
 			const byte = paddedBinary.slice(end - 4, end);
 
-			console.log({ byte });
-
 			if (byteToHex[byte] == undefined) {
 				console.log('conversion failed: ', byte);
 			}
@@ -85,13 +97,11 @@
 			converted = `${byteToHex[byte]}${converted}`;
 		}
 
-		console.log(binary, converted);
 		return `0x${converted}`;
 	};
 
-	const binaryToUint256 = (binary: string, pixelCompression: number, colorCompression: number) => {
+	const binaryToUint256 = (binary: string, pixelCompression: number) => {
 		const maxBits = 256 - (256 % (pixelCompression + colorCompression));
-		console.log({ maxBits });
 
 		if (binary.length <= maxBits) return [binaryToHex(binary)];
 
@@ -116,14 +126,11 @@
 		return uint256s;
 	};
 
-	$: packets = compressColors(7, colors);
-
-	console.log(packets);
+	$: packets = compressColors(compression, colors);
 </script>
 
 <div>
-	{console.log('render')}
-	{JSON.stringify(packets)} total bits: {packets.length * (6 + 1)} naive: {colors.length * 3}
-	{JSON.stringify(packetsToBinary(packets, 6, 1))}
-	{JSON.stringify(binaryToUint256(packetsToBinary(packets, 6, 1), 6, 3))}
+	compression: {compression} color-compression: {colorCompression}
+	total bits: {packets.length * (compression + 1)} naive: {colors.length * 3}
+	{JSON.stringify(binaryToUint256(packetsToBinary(packets, compression), compression))}
 </div>

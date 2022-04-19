@@ -9,6 +9,10 @@
 </script>
 
 <div class="flex flex-row">
-	<Pixel {color} {isSelected} {handleClick} />
-	<input value={color} on:input={(e) => (palette[paletteIndex] = e.currentTarget.value)} />
+	<Pixel {color} {isSelected} {handleClick} rounded={true} />
+	<input
+		value={color}
+		on:input={(e) => (palette[paletteIndex] = e.currentTarget.value)}
+		class="rounded w-24 mx-4 p-1"
+	/>
 </div>

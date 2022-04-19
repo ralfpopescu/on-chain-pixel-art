@@ -17,5 +17,5 @@
 	<Canvas xDim={x} yDim={y} bind:colors {selectedPaletteIndex} {palette} />
 	<Palette bind:palette bind:selectedPaletteIndex />
 	<button>add color</button>
-	<Code {colors} />
+	<Code {colors} {palette} />
 </div>
