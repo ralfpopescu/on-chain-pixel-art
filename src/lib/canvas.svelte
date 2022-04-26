@@ -15,7 +15,7 @@
 	{#each colors as color, i}
 		<Pixel
 			color={palette[color - 1]}
-			handleClick={() => (colors[i] = selectedPaletteIndex + 1)}
+			handleClick={() => (colors[i] = selectedPaletteIndex)}
 			isSelected={false}
 		/>
 	{/each}

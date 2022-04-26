@@ -9,13 +9,12 @@
 	let y = 20;
 
 	let colors: number[] = new Array(x * y).fill(null).map((_) => 0);
-	let palette: string[] = new Array(4).fill(null).map((_) => `#${randomColor()}`);
-	let selectedPaletteIndex = 0;
+	let palette: string[] = new Array(1).fill(null).map((_) => `#${randomColor()}`);
+	let selectedPaletteIndex = 1;
 </script>
 
 <div class="flex flex-col">
 	<Canvas xDim={x} yDim={y} bind:colors {selectedPaletteIndex} {palette} />
 	<Palette bind:palette bind:selectedPaletteIndex />
-	<button>add color</button>
 	<Code {colors} {palette} />
 </div>

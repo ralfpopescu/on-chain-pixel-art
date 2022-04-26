@@ -130,7 +130,9 @@
 </script>
 
 <div>
-	compression: {compression} color-compression: {colorCompression}
+	compression: {compression} color-compression: {colorCompression} color count: {palette.length}
 	total bits: {packets.length * (compression + 1)} naive: {colors.length * 3}
+	number of packets {packets.length}
+	{JSON.stringify(colors)}
 	{JSON.stringify(binaryToUint256(packetsToBinary(packets, compression), compression))}
 </div>

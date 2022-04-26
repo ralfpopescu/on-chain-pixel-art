@@ -10,10 +10,14 @@
 			bind:palette
 			paletteIndex={i}
 			handleClick={() => {
-				return (selectedPaletteIndex = i);
+				return (selectedPaletteIndex = i + 1);
 			}}
-			isSelected={selectedPaletteIndex === i}
+			isSelected={selectedPaletteIndex - 1 === i}
 		/>
 	{/each}
-	<button on:click={() => (palette = [...palette, '#000000'])}>+</button>
+	<button class="bg-white p-2 rounded my-2" on:click={() => (palette = [...palette, '#000000'])}
+		>+</button
+	>
+	<button class="bg-white p-2 rounded my-2" on:click={() => (selectedPaletteIndex = 0)}>-</button>
+	>
 </div>
