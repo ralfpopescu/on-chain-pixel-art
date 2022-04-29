@@ -7,7 +7,7 @@
 
 <div
 	style={`background-color: ${color}; ${
-		isSelected ? 'border: 4px solid red;' : 'border: 1px dotted grey'
+		isSelected ? 'border: 2px solid #eeeeee;' : 'border: 1px dotted grey'
 	}`}
 	class={`w-5 cursor-crosshair hover:border-2 ${rounded ? 'rounded-full' : ''}`}
 	on:click={handleClick}

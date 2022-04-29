@@ -8,11 +8,19 @@
 	$: color = palette[paletteIndex];
 </script>
 
-<div class="flex flex-row">
-	<Pixel {color} {isSelected} {handleClick} rounded={true} />
+<div class="flex flex-row w-40 px-2 py-8">
+	<div
+		style={`background-color: ${color}; ${
+			isSelected ? 'border: 2px solid #eeeeee;' : 'border: 1px dotted grey'
+		}`}
+		class={`w-8 cursor-pointer hover:border-2 rounded-full`}
+		on:click={handleClick}
+		on:dragover={handleClick}
+		draggable={true}
+	/>
 	<input
 		value={color}
 		on:input={(e) => (palette[paletteIndex] = e.currentTarget.value)}
-		class="rounded w-24 mx-4 p-1"
+		class="rounded mx-4 p-1 w-20"
 	/>
 </div>
