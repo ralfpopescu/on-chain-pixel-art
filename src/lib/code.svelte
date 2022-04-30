@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let colors: number[];
+	import CodeGen from './code-gen.svelte';
+	export let canvases: number[][];
+	export let activeCanvas: number;
+
+	$: colors = canvases[activeCanvas];
 	export let palette;
 
 	let compression = 4;
@@ -130,9 +134,11 @@
 </script>
 
 <div>
-	compression: {compression} color-compression: {colorCompression} color count: {palette.length}
+	<!-- compression: {compression} color-compression: {colorCompression} color count: {palette.length}
 	total bits: {packets.length * (compression + 1)} naive: {colors.length * 3}
 	number of packets {packets.length}
 	{JSON.stringify(colors)}
-	{JSON.stringify(binaryToUint256(packetsToBinary(packets, compression), compression))}
+	{JSON.stringify(canvases)}
+	{JSON.stringify(binaryToUint256(packetsToBinary(packets, compression), compression))} -->
+	<CodeGen x={20} y={20} layerCount={2} compression={4} />
 </div>
