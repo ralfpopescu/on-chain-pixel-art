@@ -4,7 +4,9 @@
 	export let activeCanvas: number;
 
 	$: colors = canvases[activeCanvas];
-	export let palette;
+	export let palettes;
+
+	$: palette = palettes[activeCanvas];
 
 	let compression = 4;
 

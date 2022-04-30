@@ -5,7 +5,7 @@
 	export let y: number;
 </script>
 
-<div class="flex flex-col container">
+<div class="flex flex-col container bg-dark">
 	<span class="f">// SPDX-License-Identifier: MIT</span>
 	<span class="f">// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)</span>
 	<br />
@@ -124,7 +124,6 @@
 	.container {
 		color: white;
 		opacity: 0.95;
-		background-color: #0e1c36;
 		padding: 16px;
 		overflow: auto;
 		height: 800px;

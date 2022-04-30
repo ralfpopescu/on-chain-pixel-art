@@ -1,13 +1,14 @@
 <script lang="ts">
-	export let palette: string[] = [];
+	export let palettes: string[][] = [];
 	export let paletteIndex: number;
+	export let activeCanvas;
 	export let isSelected: boolean = false;
 	export let handleClick;
 
-	$: color = palette[paletteIndex];
+	$: color = palettes[activeCanvas][paletteIndex];
 </script>
 
-<div class="flex flex-row w-40 px-2 py-2">
+<div class="flex flex-row w-40 px-2 py-2 text-dark">
 	<div
 		style={`background-color: ${color}; ${
 			isSelected ? 'border: 4px solid #eeeeee;' : 'border: 1px solid #eeeeee'
@@ -19,15 +20,15 @@
 	/>
 	<input
 		value={color}
-		on:input={(e) => (palette[paletteIndex] = e.currentTarget.value)}
+		on:input={(e) => (palettes[activeCanvas][paletteIndex] = e.currentTarget.value)}
 		class="rounded mx-4 p-1 w-20"
 	/>
 	<button
 		class={`size cursor-pointer hover:border-2 rounded-full bg-white`}
 		on:click={() => {
-			const newPalette = [...palette];
+			const newPalette = [...palettes[activeCanvas]];
 			newPalette[paletteIndex] = 'RM';
-			palette = newPalette.filter((p) => p !== 'RM');
+			palettes[activeCanvas] = newPalette.filter((p) => p !== 'RM');
 		}}>-</button
 	>
 </div>
