@@ -142,5 +142,5 @@
 	{JSON.stringify(colors)}
 	{JSON.stringify(canvases)}
 	{JSON.stringify(binaryToUint256(packetsToBinary(packets, compression), compression))} -->
-	<CodeGen x={20} y={20} layerCount={2} compression={4} />
+	<CodeGen x={20} y={20} layerCount={2} compression={4} {canvases} {palettes} />
 </div>

@@ -117,3 +117,27 @@ export const binaryToUint256 = (binary: string, pixelCompression: number, colorC
 
   return uint256s;
 };
+
+export const encodeCanvas = (canvas: number[], pixelCompression: number, colorCount: number) => {
+  const colorCompression = getColorCompression(colorCount);
+  const compressed = compressColors(pixelCompression, canvas);
+  const binary = packetsToBinary(compressed, pixelCompression, colorCompression);
+  return binaryToUint256(binary, pixelCompression, colorCompression);
+}
+
+export const encodePalette = (colors: string[]) => {
+  const encoded = [];
+  let layer = [];
+
+  colors.forEach(color => {
+    layer.push(color.replace('#', ''))
+    if (layer.length == 10) {
+      encoded.push(`0x${layer.reverse().join('')}`)
+      layer = []
+    }
+  })
+
+  encoded.push(`0x${layer.reverse().join('')}`)
+
+  return encoded;
+}

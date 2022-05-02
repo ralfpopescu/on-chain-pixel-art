@@ -12,6 +12,8 @@
 	class={`pixel w-5 cursor-crosshair hover:border-2 ${rounded ? 'rounded-full' : ''}`}
 	on:click={handleClick}
 	on:dragover={handleClick}
+	on:dragstart={() => console.log('start')}
+	on:dragend={() => console.log('end')}
 	draggable={true}
 />
 

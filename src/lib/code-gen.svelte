@@ -1,8 +1,21 @@
 <script lang="ts">
+	import { each } from 'svelte/internal';
+
+	import { encodeCanvas, encodePalette } from '../util/code-gen';
 	export let layerCount: number;
 	export let compression: number;
 	export let x: number;
 	export let y: number;
+
+	export let canvases: number[][];
+	export let palettes: string[][];
+
+	$: canvasesEncoded = canvases.map((canvas, i) =>
+		encodeCanvas(canvas, compression, palettes[i].length)
+	);
+	$: palettesEncoded = palettes.map((palette) => encodePalette(palette));
+
+	$: console.log({ canvasesEncoded, palettesEncoded });
 </script>
 
 <div class="flex flex-col container bg-dark">
@@ -46,15 +59,20 @@
 		><span class="b">constructor</span>(<span class="a">address</span> _renderer) {`{`}</span
 	>
 	<span class="i2">renderer = <span class="d">IRenderer</span>(_renderer);</span>
-	<span class="i2"
-		>assets[<span class="d">0</span>] = [<span class="d"
-			>0x55f7df7df96fbefbefbefbefbefbefbefbefbefbef</span
-		>];</span
-	>
-	<span class="i2"
-		>palettes[<span class="d">0</span>] = [<span class="d">0x2244bb11ee11</span>];</span
-	>
-	<span class="i2">colorCounts[<span class="d">0</span>] = <span class="d">2</span>;</span>
+	{#each canvasesEncoded as asset, i}
+		<br />
+		<span class="i2"
+			>assets[<span class="d">0</span>] = [<span class="d">{asset.join(', ')}</span>];</span
+		>
+		<span class="i2"
+			>palettes[<span class="d">0</span>] = [<span class="d">{palettesEncoded[i].join(',')}</span
+			>];</span
+		>
+		<span class="i2"
+			>colorCounts[<span class="d">0</span>] =
+			<span class="d">{palettesEncoded[i].length}</span>;</span
+		>
+	{/each}
 	<span class="i1">}</span>
 	<br />
 	<span class="i1"
