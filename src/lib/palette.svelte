@@ -17,10 +17,13 @@
 			isSelected={selectedPaletteIndex - 1 === i}
 		/>
 	{/each}
-	<button
-		class="w-8 h-8 flex bg-white rounded-full my-2 justify-center content-center mx-2"
-		on:click={() => (palettes[activeCanvas] = [...palettes[activeCanvas], '#000000'])}>+</button
-	>
+	<div class="flex flex-row content-center">
+		<button
+			class="w-8 h-8 flex bg-white rounded-full my-2 justify-center content-center mx-2"
+			on:click={() => (palettes[activeCanvas] = [...palettes[activeCanvas], '#000000'])}>+</button
+		>
+		<div>add color to layer</div>
+	</div>
 	<button
 		class="w-8 h-8 flex bg-white rounded-full my-2 justify-center content-center mx-2"
 		on:click={() => (selectedPaletteIndex = 0)}>-</button

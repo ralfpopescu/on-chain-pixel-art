@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Canvas from '$lib/canvas.svelte';
 	import Palette from '$lib/palette.svelte';
+	import DimensionControls from '$lib/dimension-controls.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -27,6 +28,7 @@
 		<Canvas xDim={x} yDim={y} bind:canvases {activeCanvas} {selectedPaletteIndex} {palettes} />
 	</div>
 	<div class="sidebar">
+		<DimensionControls bind:x bind:y bind:canvases />
 		<Palette bind:palettes bind:selectedPaletteIndex {activeCanvas} />
 	</div>
 	<div class="code">
