@@ -2,15 +2,23 @@
 	export let activeCanvas: number;
 	export let canvases: number[][];
 	export let palettes: string[][];
+	export let previewed: number[];
 </script>
 
 <div class="bg-dark flex h-full container">
 	{#each canvases as canvas, i}
-		<div
-			class={`px-8 h-full tab ${activeCanvas == i ? 'bg-dark2' : ''} border-x-2 border-dark2`}
-			on:click={() => (activeCanvas = i)}
-		>
-			<span> Untitled </span>
+		<div class={`px-8 h-full tab ${activeCanvas == i ? 'bg-dark2' : ''} border-x-2 border-dark2`}>
+			<span on:click={() => (activeCanvas = i)}> Untitled </span>
+			<button
+				class="bg-white"
+				on:click={() => {
+					if (previewed.includes(i)) {
+						previewed = previewed.filter((p) => p !== i);
+						return;
+					}
+					previewed = [...previewed, i];
+				}}>preview</button
+			>
 		</div>
 	{/each}
 	<div

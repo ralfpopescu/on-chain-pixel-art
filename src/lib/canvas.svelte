@@ -3,15 +3,46 @@
 	export let canvases: number[][];
 	export let activeCanvas: number;
 	export let palettes: string[][];
+	export let previewed: number[];
 
-	$: canvas = canvases[activeCanvas];
-	$: palette = palettes[activeCanvas];
+	let canvas: string[];
+
+	$: {
+		console.log({ previewed });
+		if (previewed.length) {
+			// layer on top of active canvas
+			const composed = [...canvases[activeCanvas]].map((pixel) => {
+				if (pixel > 0) {
+					return palettes[activeCanvas][pixel - 1];
+				}
+				return '#ffffff';
+			});
+
+			previewed.forEach((previewIndex) => {
+				const preview = canvases[previewIndex];
+				preview.forEach((pixel, i) => {
+					if (pixel > 0) {
+						composed[i] = palettes[previewIndex][pixel - 1];
+					}
+				});
+			});
+
+			canvas = composed;
+		} else {
+			canvas = canvases[activeCanvas].map((pixel) => {
+				if (pixel > 0) {
+					return palettes[activeCanvas][pixel - 1];
+				}
+				return '#ffffff';
+			});
+		}
+	}
+	$: {
+	}
 
 	export let xDim: number;
 	export let yDim: number;
 	export let selectedPaletteIndex;
-
-	console.log({ canvas, canvases, activeCanvas });
 </script>
 
 <div
@@ -22,7 +53,7 @@
 >
 	{#each canvas as color, i}
 		<Pixel
-			color={palette[color - 1] || 'rgba(255, 255, 255, 0.9)'}
+			{color}
 			handleClick={() => (canvases[activeCanvas][i] = selectedPaletteIndex)}
 			isSelected={false}
 		/>

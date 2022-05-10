@@ -8,24 +8,56 @@
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
-	let x = 20;
-	let y = 20;
+	const defaultX = 20;
+	const defaultY = 20;
+	const defaultCanvases = [new Array(defaultX * defaultY).fill(null).map((_) => 0)];
+	const defaultPalettes = [new Array(1).fill(null).map((_) => `#${randomColor()}`)];
 
-	let canvases: number[][] = [new Array(x * y).fill(null).map((_) => 0)];
+	let appState = {
+		canvases: defaultCanvases,
+		palettes: defaultPalettes,
+		x: defaultX,
+		y: defaultY
+	};
+
+	if (typeof localStorage !== 'undefined') {
+		const savedData = localStorage.getItem('savedData');
+		if (savedData) appState = JSON.parse(savedData);
+	}
+
+	let x = appState.x;
+	let y = appState.y;
+	let canvases = appState.canvases;
+	let palettes = appState.palettes;
+
 	let activeCanvas: number = 0;
-
-	let palettes: string[][] = [new Array(1).fill(null).map((_) => `#${randomColor()}`)];
 	let selectedPaletteIndex = 1;
+
+	let previewed: number[] = [];
+
+	$: {
+		if (typeof localStorage !== 'undefined') {
+			localStorage.setItem('savedData', JSON.stringify({ canvases, palettes, x, y }));
+		}
+	}
 
 	$: selectedPaletteIndex = 1;
 </script>
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
-		<Tabs bind:canvases bind:activeCanvas bind:palettes />
+		<Tabs bind:canvases bind:activeCanvas bind:palettes bind:previewed />
 	</div>
 	<div class="canvas">
-		<Canvas xDim={x} yDim={y} bind:canvases {activeCanvas} {selectedPaletteIndex} {palettes} />
+		<Canvas
+			xDim={x}
+			yDim={y}
+			bind:canvases
+			{activeCanvas}
+			{selectedPaletteIndex}
+			{palettes}
+			bind:previewed
+		/>
 	</div>
 	<div class="sidebar">
 		<DimensionControls bind:x bind:y bind:canvases />
