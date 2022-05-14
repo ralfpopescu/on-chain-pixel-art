@@ -6,6 +6,7 @@
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
+	import Optimizer from '$lib/optimizer.svelte';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -63,13 +64,14 @@
 			{palettes}
 			bind:previewed
 		/>
+		<Optimizer {canvases} {palettes} {activeCanvas} />
 	</div>
 	<div class="sidebar">
 		<DimensionControls bind:x bind:y bind:canvases />
 		<Palette bind:palettes bind:selectedPaletteIndex {activeCanvas} />
 	</div>
 	<div class="code">
-		<Code {canvases} {activeCanvas} {palettes} />
+		<Code {canvases} {palettes} />
 	</div>
 	<div class="logo">
 		<Logo />
