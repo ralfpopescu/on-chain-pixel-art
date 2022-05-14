@@ -3,12 +3,13 @@
 	export let canvases: number[][];
 	export let palettes: string[][];
 	export let previewed: number[];
+	export let names: string[];
 </script>
 
 <div class="bg-dark flex h-full container">
-	{#each canvases as canvas, i}
+	{#each canvases as _, i}
 		<div class={`px-8 h-full tab ${activeCanvas == i ? 'bg-dark2' : ''} border-x-2 border-dark2`}>
-			<span on:click={() => (activeCanvas = i)}> Untitled </span>
+			<span on:click={() => (activeCanvas = i)}>{names[i]}</span>
 			<button
 				class="bg-white"
 				on:click={() => {

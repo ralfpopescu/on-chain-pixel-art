@@ -2,6 +2,7 @@
 	import Canvas from '$lib/canvas.svelte';
 	import Palette from '$lib/palette.svelte';
 	import DimensionControls from '$lib/dimension-controls.svelte';
+	import CanvasControls from '$lib/canvas-controls.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -12,10 +13,12 @@
 	const defaultY = 20;
 	const defaultCanvases = [new Array(defaultX * defaultY).fill(null).map((_) => 0)];
 	const defaultPalettes = [new Array(1).fill(null).map((_) => `#${randomColor()}`)];
+	const defaultNames = ['Untitled1'];
 
 	let appState = {
 		canvases: defaultCanvases,
 		palettes: defaultPalettes,
+		names: defaultNames,
 		x: defaultX,
 		y: defaultY
 	};
@@ -29,6 +32,7 @@
 	let y = appState.y;
 	let canvases = appState.canvases;
 	let palettes = appState.palettes;
+	let names = appState.names;
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
@@ -37,7 +41,7 @@
 
 	$: {
 		if (typeof localStorage !== 'undefined') {
-			localStorage.setItem('savedData', JSON.stringify({ canvases, palettes, x, y }));
+			localStorage.setItem('savedData', JSON.stringify({ canvases, palettes, x, y, names }));
 		}
 	}
 
@@ -46,9 +50,10 @@
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
-		<Tabs bind:canvases bind:activeCanvas bind:palettes bind:previewed />
+		<Tabs bind:canvases bind:activeCanvas bind:palettes bind:previewed {names} />
 	</div>
 	<div class="canvas">
+		<CanvasControls bind:names {activeCanvas} />
 		<Canvas
 			xDim={x}
 			yDim={y}
@@ -82,8 +87,10 @@
 	.canvas {
 		grid-area: canvas;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
-		padding-top: 10%;
+		align-items: center;
+		padding-bottom: 30%;
 	}
 
 	.sidebar {
