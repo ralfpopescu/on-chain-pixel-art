@@ -1,10 +1,12 @@
 <script lang="ts">
-	export let canvases: number[][];
+	import type { Layer } from './types';
+	export let layers: Layer[];
 	export let x;
 	export let y;
 
 	const addNToX = (n: number) => {
-		const updatedCanvases = canvases.map((canvas) => {
+		const updatedLayers = layers.map((layer) => {
+			const { canvas } = layer;
 			const newCanvas = [];
 			canvas.forEach((p, i) => {
 				newCanvas.push(p);
@@ -15,50 +17,53 @@
 					}
 				}
 			});
-			return newCanvas;
+			return { ...layer, canvas: newCanvas };
 		});
 		x = x + n;
-		canvases = updatedCanvases;
+		layers = updatedLayers;
 	};
 
 	const addNToY = (n: number) => {
-		const updatedCanvases = canvases.map((canvas) => {
+		const updatedLayers = layers.map((layer) => {
+			const { canvas } = layer;
 			const newCanvas = [...canvas];
 			for (let i = 0; i < n * x; i += 1) {
 				newCanvas.push(0);
 			}
-			return newCanvas;
+			return { ...layer, canvas: newCanvas };
 		});
 
 		y = y + n;
-		canvases = updatedCanvases;
+		layers = updatedLayers;
 	};
 
 	const removeNFromX = (n: number) => {
-		const updatedCanvases = canvases.map((canvas) => {
+		const updatedLayers = layers.map((layer) => {
+			const { canvas } = layer;
 			const newCanvas = [];
 			canvas.forEach((p, i) => {
 				if (i % x >= n) {
 					newCanvas.push(canvas[i]);
 				}
 			});
-			return newCanvas;
+			return { ...layer, canvas: newCanvas };
 		});
 		x = x - n;
-		canvases = updatedCanvases;
+		layers = updatedLayers;
 	};
 
 	const removeNFromY = (n: number) => {
-		const updatedCanvases = canvases.map((canvas) => {
+		const updatedLayers = layers.map((layer) => {
+			const { canvas } = layer;
 			const newCanvas = [];
 			for (let i = 0; i < canvas.length - x * n; i += 1) {
 				newCanvas.push(canvas[i]);
 			}
 
-			return newCanvas;
+			return { ...layer, canvas: newCanvas };
 		});
 		y = y - n;
-		canvases = updatedCanvases;
+		layers = updatedLayers;
 	};
 </script>
 

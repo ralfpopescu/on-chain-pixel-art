@@ -1,37 +1,36 @@
 <script lang="ts">
 	import Pixel from './pixel.svelte';
-	export let canvases: number[][];
+	import type { Layer } from './types';
+	export let layers: Layer[];
 	export let activeCanvas: number;
-	export let palettes: string[][];
 	export let previewed: number[];
 
 	let canvas: string[];
 
 	$: {
-		console.log({ previewed });
 		if (previewed.length) {
 			// layer on top of active canvas
-			const composed = [...canvases[activeCanvas]].map((pixel) => {
+			const composed = [...layers[activeCanvas].canvas].map((pixel) => {
 				if (pixel > 0) {
-					return palettes[activeCanvas][pixel - 1];
+					return layers[activeCanvas].palette[pixel - 1];
 				}
 				return '#ffffff';
 			});
 
 			previewed.forEach((previewIndex) => {
-				const preview = canvases[previewIndex];
+				const preview = layers[previewIndex].canvas;
 				preview.forEach((pixel, i) => {
 					if (pixel > 0) {
-						composed[i] = palettes[previewIndex][pixel - 1];
+						composed[i] = layers[previewIndex].palette[pixel - 1];
 					}
 				});
 			});
 
 			canvas = composed;
 		} else {
-			canvas = canvases[activeCanvas].map((pixel) => {
+			canvas = layers[activeCanvas].canvas.map((pixel) => {
 				if (pixel > 0) {
-					return palettes[activeCanvas][pixel - 1];
+					return layers[activeCanvas].palette[pixel - 1];
 				}
 				return '#ffffff';
 			});
@@ -54,7 +53,7 @@
 	{#each canvas as color, i}
 		<Pixel
 			{color}
-			handleClick={() => (canvases[activeCanvas][i] = selectedPaletteIndex)}
+			handleClick={() => (layers[activeCanvas].canvas[i] = selectedPaletteIndex)}
 			isSelected={false}
 		/>
 	{/each}

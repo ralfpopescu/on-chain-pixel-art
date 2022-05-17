@@ -1,10 +1,11 @@
 <script lang="ts">
-	export let names: string[];
+	import type { Layer } from './types';
+	export let layers: Layer[];
 	export let activeCanvas: number;
 	let editMode;
 	let editName;
 
-	$: name = names[activeCanvas];
+	$: name = layers[activeCanvas].name;
 </script>
 
 <div class="flex flex-row">
@@ -12,7 +13,7 @@
 		<input
 			bind:value={editName}
 			on:blur={() => {
-				names[activeCanvas] = editName;
+				layers[activeCanvas].name = editName;
 				editMode = false;
 			}}
 		/>
@@ -27,4 +28,9 @@
 			{name}
 		</div>
 	{/if}
+	<button
+		on:click={() => {
+			layers = layers.filter((_, i) => i !== activeCanvas);
+		}}>delete layer</button
+	>
 </div>

@@ -1,19 +1,17 @@
 <script lang="ts">
-	import { each } from 'svelte/internal';
-
+	import type { Layer } from './types';
 	import { encodeCanvas, encodePalette } from '../util/code-gen';
+
+	export let layers: Layer[];
 	export let layerCount: number;
 	export let compression: number;
 	export let x: number;
 	export let y: number;
 
-	export let canvases: number[][];
-	export let palettes: string[][];
-
-	$: canvasesEncoded = canvases.map((canvas, i) =>
-		encodeCanvas(canvas, compression, palettes[i].length)
+	$: canvasesEncoded = layers.map(({ canvas, palette }) =>
+		encodeCanvas(canvas, compression, palette.length)
 	);
-	$: palettesEncoded = palettes.map((palette) => encodePalette(palette));
+	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 
 	$: console.log({ canvasesEncoded, palettesEncoded });
 </script>

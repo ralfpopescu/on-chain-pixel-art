@@ -7,19 +7,24 @@
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
 	import Optimizer from '$lib/optimizer.svelte';
+	import type { AppState } from '$lib/types';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
 	const defaultX = 20;
 	const defaultY = 20;
-	const defaultCanvases = [new Array(defaultX * defaultY).fill(null).map((_) => 0)];
-	const defaultPalettes = [new Array(1).fill(null).map((_) => `#${randomColor()}`)];
-	const defaultNames = ['Untitled1'];
+	const defaultCanvas = new Array(defaultX * defaultY).fill(null).map((_) => 0);
+	const defaultPalette = new Array(1).fill(null).map((_) => `#${randomColor()}`);
+	const defaultName = 'Untitled1';
 
-	let appState = {
-		canvases: defaultCanvases,
-		palettes: defaultPalettes,
-		names: defaultNames,
+	let appState: AppState = {
+		layers: [
+			{
+				canvas: defaultCanvas,
+				palette: defaultPalette,
+				name: defaultName
+			}
+		],
 		x: defaultX,
 		y: defaultY
 	};
@@ -31,9 +36,7 @@
 
 	let x = appState.x;
 	let y = appState.y;
-	let canvases = appState.canvases;
-	let palettes = appState.palettes;
-	let names = appState.names;
+	let layers = appState.layers;
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
@@ -42,7 +45,7 @@
 
 	$: {
 		if (typeof localStorage !== 'undefined') {
-			localStorage.setItem('savedData', JSON.stringify({ canvases, palettes, x, y, names }));
+			localStorage.setItem('savedData', JSON.stringify({ layers, x, y }));
 		}
 	}
 
@@ -51,27 +54,19 @@
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
-		<Tabs bind:canvases bind:activeCanvas bind:palettes bind:previewed {names} />
+		<Tabs bind:layers bind:activeCanvas bind:previewed />
 	</div>
 	<div class="canvas">
-		<CanvasControls bind:names {activeCanvas} />
-		<Canvas
-			xDim={x}
-			yDim={y}
-			bind:canvases
-			{activeCanvas}
-			{selectedPaletteIndex}
-			{palettes}
-			bind:previewed
-		/>
-		<Optimizer {canvases} {palettes} {activeCanvas} />
+		<CanvasControls bind:layers {activeCanvas} />
+		<Canvas xDim={x} yDim={y} bind:layers {activeCanvas} {selectedPaletteIndex} bind:previewed />
+		<Optimizer {layers} {activeCanvas} />
 	</div>
 	<div class="sidebar">
-		<DimensionControls bind:x bind:y bind:canvases />
-		<Palette bind:palettes bind:selectedPaletteIndex {activeCanvas} />
+		<DimensionControls bind:x bind:y bind:layers />
+		<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
 	</div>
 	<div class="code">
-		<Code {canvases} {palettes} />
+		<Code {layers} />
 	</div>
 	<div class="logo">
 		<Logo />
