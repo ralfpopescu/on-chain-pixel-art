@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Layer } from './types';
+	import Eye from './graphics/eye.svelte';
 	export let activeCanvas: number;
 	export let previewed: number[];
 	export let layers: Layer[];
@@ -7,18 +8,23 @@
 
 <div class="bg-dark flex h-full container">
 	{#each layers as _, i}
-		<div class={`px-8 h-full tab ${activeCanvas == i ? 'bg-dark2' : ''} border-x-2 border-dark2`}>
+		<div
+			class={`px-8 h-full tab ${activeCanvas == i ? 'bg-dark2' : ''} border-x-2 border-dark2 gap-4`}
+		>
 			<span on:click={() => (activeCanvas = i)}>{layers[i].name}</span>
-			<button
-				class="bg-white"
+			<div
 				on:click={() => {
 					if (previewed.includes(i)) {
 						previewed = previewed.filter((p) => p !== i);
 						return;
 					}
 					previewed = [...previewed, i];
-				}}>preview</button
+				}}
+				class="hover:scale-110"
+				style={previewed.includes(i) || activeCanvas === i ? '' : 'opacity: 0.5'}
 			>
+				<Eye />
+			</div>
 		</div>
 	{/each}
 	<div

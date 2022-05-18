@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Layer } from './types';
+	import Delete from './graphics/delete.svelte';
 	export let layers: Layer[];
 	export let paletteIndex: number;
 	export let activeCanvas;
@@ -24,14 +25,17 @@
 		on:input={(e) => (layers[activeCanvas].palette[paletteIndex] = e.currentTarget.value)}
 		class="rounded mx-4 p-1 w-20"
 	/>
-	<button
-		class={`size cursor-pointer hover:border-2 rounded-full bg-white`}
+	<div
+		class={`size cursor-pointer hover:border-2 flex flex-row content-center justify-center`}
+		role="button"
 		on:click={() => {
 			const newPalette = [...layers[activeCanvas].palette];
 			newPalette[paletteIndex] = 'RM';
 			layers[activeCanvas].palette = newPalette.filter((p) => p !== 'RM');
-		}}>-</button
+		}}
 	>
+		<Delete />
+	</div>
 </div>
 
 <style>

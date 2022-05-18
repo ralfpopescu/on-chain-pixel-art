@@ -16,6 +16,7 @@
 	const defaultCanvas = new Array(defaultX * defaultY).fill(null).map((_) => 0);
 	const defaultPalette = new Array(1).fill(null).map((_) => `#${randomColor()}`);
 	const defaultName = 'Untitled1';
+	const defaultBackgroundColor = '#ffffff';
 
 	let appState: AppState = {
 		layers: [
@@ -57,13 +58,15 @@
 		<Tabs bind:layers bind:activeCanvas bind:previewed />
 	</div>
 	<div class="canvas">
-		<CanvasControls bind:layers {activeCanvas} />
+		<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
 		<Canvas xDim={x} yDim={y} bind:layers {activeCanvas} {selectedPaletteIndex} bind:previewed />
 		<Optimizer {layers} {activeCanvas} />
 	</div>
 	<div class="sidebar">
-		<DimensionControls bind:x bind:y bind:layers />
-		<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+		<div class="container bg-dark flex flex-col py-8 px-2">
+			<DimensionControls bind:x bind:y bind:layers />
+			<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+		</div>
 	</div>
 	<div class="code">
 		<Code {layers} />
@@ -85,8 +88,8 @@
 		grid-area: canvas;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		align-items: center;
+		gap: 20px;
 		padding-bottom: 30%;
 	}
 

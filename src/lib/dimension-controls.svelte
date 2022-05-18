@@ -1,5 +1,8 @@
 <script lang="ts">
 	import type { Layer } from './types';
+	import Add from './graphics/add.svelte';
+	import Minus from './graphics/minus.svelte';
+
 	export let layers: Layer[];
 	export let x;
 	export let y;
@@ -68,14 +71,38 @@
 </script>
 
 <div>
-	<div class="flex flex-row">
-		<button on:click={() => removeNFromX(1)}>-</button>
-		<dix>x</dix>
-		<button on:click={() => addNToX(1)}>+</button>
+	<div class="flex flex-row justify-center align-center text-2xl">
+		<div
+			on:click={() => removeNFromX(1)}
+			class="flex flex-row justify-center align-center mr-4"
+			role="button"
+		>
+			<Minus />
+		</div>
+		<dix>x({x})</dix>
+		<div
+			on:click={() => addNToX(1)}
+			class="flex flex-row justify-center align-center ml-4"
+			role="button"
+		>
+			<Add />
+		</div>
 	</div>
-	<div class="flex flex-row">
-		<button on:click={() => removeNFromY(1)}>-</button>
-		<dix>y</dix>
-		<button on:click={() => addNToY(1)}>>+</button>
+	<div class="flex flex-row justify-center align-center text-2xl">
+		<div
+			on:click={() => removeNFromY(1)}
+			class="flex flex-row justify-center align-center mr-4"
+			role="button"
+		>
+			<Minus />
+		</div>
+		<dix>y({y})</dix>
+		<div
+			on:click={() => addNToY(1)}
+			class="flex flex-row justify-center align-center ml-4"
+			role="button"
+		>
+			<Add />
+		</div>
 	</div>
 </div>

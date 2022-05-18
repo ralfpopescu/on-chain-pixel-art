@@ -1,12 +1,14 @@
 <script lang="ts">
 	import PaletteColor from './palette-color.svelte';
+	import Add from './graphics/add.svelte';
+	import Eraser from './graphics/eraser.svelte';
 	import type { Layer } from './types';
 	export let layers: Layer[];
 	export let selectedPaletteIndex = 0;
 	export let activeCanvas;
 </script>
 
-<div class="container bg-dark flex flex-col py-8 px-2">
+<div class="flex flex-col">
 	{#each layers[activeCanvas].palette as _, i}
 		<PaletteColor
 			bind:layers
@@ -19,21 +21,19 @@
 		/>
 	{/each}
 	<div class="flex flex-row content-center">
-		<button
-			class="w-8 h-8 flex bg-white rounded-full my-2 justify-center content-center mx-2"
+		<div
+			class="w-8 h-8 flex justify-center content-center mx-2"
 			on:click={() => (layers[activeCanvas].palette = [...layers[activeCanvas].palette, '#000000'])}
-			>+</button
+			role="button"
 		>
-		<div>add color to layer</div>
+			<Add />
+		</div>
 	</div>
-	<button
-		class="w-8 h-8 flex bg-white rounded-full my-2 justify-center content-center mx-2"
-		on:click={() => (selectedPaletteIndex = 0)}>-</button
+	<div
+		class="w-8 h-8 flex my-2 justify-center content-center mx-2"
+		role="button"
+		on:click={() => (selectedPaletteIndex = 0)}
 	>
+		<Eraser />
+	</div>
 </div>
-
-<style>
-	.container {
-		width: 220px;
-	}
-</style>
