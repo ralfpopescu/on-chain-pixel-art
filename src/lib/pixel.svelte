@@ -9,7 +9,7 @@
 	style={`background-color: ${color}; ${
 		isSelected ? 'border: 2px solid #eeeeee;' : 'border: 1px dotted grey'
 	}`}
-	class={`pixel w-5 cursor-crosshair hover:border-2 ${rounded ? 'rounded-full' : ''}`}
+	class={`pixel w-5 cursor-crosshair hover:opacity-90 ${rounded ? 'rounded-full' : ''}`}
 	on:click={handleClick}
 	on:dragover={handleClick}
 	on:dragstart={() => console.log('start')}

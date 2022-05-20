@@ -16,7 +16,7 @@
 	$: console.log({ canvasesEncoded, palettesEncoded });
 </script>
 
-<div class="flex flex-col container bg-dark">
+<div class="flex flex-col">
 	<span class="f">// SPDX-License-Identifier: MIT</span>
 	<span class="f">// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)</span>
 	<br />
@@ -137,14 +137,6 @@
 </div>
 
 <style>
-	.container {
-		color: white;
-		opacity: 0.95;
-		padding: 16px;
-		overflow: auto;
-		height: 800px;
-	}
-
 	.a {
 		color: #42e2b8;
 	}

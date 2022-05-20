@@ -3,6 +3,7 @@
 	import Palette from '$lib/palette.svelte';
 	import DimensionControls from '$lib/dimension-controls.svelte';
 	import CanvasControls from '$lib/canvas-controls.svelte';
+	import CodeControls from '$lib/code-controls.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -41,6 +42,7 @@
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
+	let activeCodeIndex = 0;
 
 	let previewed: number[] = [];
 
@@ -69,10 +71,13 @@
 		</div>
 	</div>
 	<div class="code">
-		<Code {layers} />
+		<Code {layers} {activeCodeIndex} />
 	</div>
 	<div class="logo">
 		<Logo />
+	</div>
+	<div class="code-header">
+		<CodeControls bind:activeCodeIndex />
 	</div>
 </div>
 
