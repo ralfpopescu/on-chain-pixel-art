@@ -7,5 +7,6 @@ export type Layer = {
 export type AppState = {
   x: number;
   y: number;
+  backgroundColor: string;
   layers: Layer[];
 };

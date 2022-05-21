@@ -59,15 +59,16 @@
 	<span class="i2">renderer = <span class="d">IRenderer</span>(_renderer);</span>
 	{#each canvasesEncoded as asset, i}
 		<br />
+		<span class="i2 f">// {layers[i].name}</span>
 		<span class="i2"
-			>assets[<span class="d">0</span>] = [<span class="d">{asset.join(', ')}</span>];</span
+			>assets[<span class="d">{i}</span>] = [<span class="d">{asset.join(', ')}</span>];</span
 		>
 		<span class="i2"
-			>palettes[<span class="d">0</span>] = [<span class="d">{palettesEncoded[i].join(',')}</span
+			>palettes[<span class="d">{i}</span>] = [<span class="d">{palettesEncoded[i].join(',')}</span
 			>];</span
 		>
 		<span class="i2"
-			>colorCounts[<span class="d">0</span>] =
+			>colorCounts[<span class="d">{i}</span>] =
 			<span class="d">{palettesEncoded[i].length}</span>;</span
 		>
 	{/each}

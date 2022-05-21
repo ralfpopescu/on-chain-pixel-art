@@ -3,6 +3,7 @@
 	import Palette from '$lib/palette.svelte';
 	import DimensionControls from '$lib/dimension-controls.svelte';
 	import CanvasControls from '$lib/canvas-controls.svelte';
+	import BackgroundControl from '$lib/background-control.svelte';
 	import CodeControls from '$lib/code-controls.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
@@ -28,7 +29,8 @@
 			}
 		],
 		x: defaultX,
-		y: defaultY
+		y: defaultY,
+		backgroundColor: defaultBackgroundColor
 	};
 
 	if (typeof localStorage !== 'undefined') {
@@ -39,6 +41,7 @@
 	let x = appState.x;
 	let y = appState.y;
 	let layers = appState.layers;
+	let backgroundColor = appState.backgroundColor;
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
@@ -48,7 +51,7 @@
 
 	$: {
 		if (typeof localStorage !== 'undefined') {
-			localStorage.setItem('savedData', JSON.stringify({ layers, x, y }));
+			localStorage.setItem('savedData', JSON.stringify({ layers, x, y, backgroundColor }));
 		}
 	}
 
@@ -61,11 +64,20 @@
 	</div>
 	<div class="canvas">
 		<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
-		<Canvas xDim={x} yDim={y} bind:layers {activeCanvas} {selectedPaletteIndex} bind:previewed />
+		<Canvas
+			xDim={x}
+			yDim={y}
+			bind:layers
+			{activeCanvas}
+			{selectedPaletteIndex}
+			bind:previewed
+			{backgroundColor}
+		/>
 		<Optimizer {layers} {activeCanvas} />
 	</div>
 	<div class="sidebar">
 		<div class="container bg-dark flex flex-col py-8 px-2">
+			<BackgroundControl bind:backgroundColor />
 			<DimensionControls bind:x bind:y bind:layers />
 			<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
 		</div>

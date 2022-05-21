@@ -1,17 +1,17 @@
 <script lang="ts">
-	export let color: string;
+	export let backgroundColor: string;
 </script>
 
 <div>
 	Background Color
 	<div class="flex flex-row w-40 px-2 py-2 text-dark">
 		<div
-			style={`background-color: ${color}`}
+			style={`background-color: ${backgroundColor}`}
 			class={`size cursor-pointer hover:border-2 rounded-full`}
 		/>
 		<input
-			value={color}
-			on:input={(e) => (color = e.currentTarget.value)}
+			value={backgroundColor}
+			on:input={(e) => (backgroundColor = e.currentTarget.value)}
 			class="rounded mx-4 p-1 w-20"
 		/>
 	</div>

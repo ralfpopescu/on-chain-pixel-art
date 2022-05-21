@@ -4,6 +4,7 @@
 	export let layers: Layer[];
 	export let activeCanvas: number;
 	export let previewed: number[];
+	export let backgroundColor: string;
 
 	let canvas: string[];
 
@@ -14,7 +15,7 @@
 				if (pixel > 0) {
 					return layers[activeCanvas].palette[pixel - 1];
 				}
-				return '#ffffff';
+				return backgroundColor;
 			});
 
 			previewed.forEach((previewIndex) => {
@@ -32,7 +33,7 @@
 				if (pixel > 0) {
 					return layers[activeCanvas].palette[pixel - 1];
 				}
-				return '#ffffff';
+				return backgroundColor;
 			});
 		}
 	}
