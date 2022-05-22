@@ -1,6 +1,5 @@
 export const getColorCompression = (numberOfColors: number) => {
   let c = 0;
-  console.log({ a: 2 ** c, b: numberOfColors });
   while (2 ** c - 1 < numberOfColors) {
     c += 1;
   }

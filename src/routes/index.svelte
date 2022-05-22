@@ -9,7 +9,7 @@
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
 	import Optimizer from '$lib/optimizer.svelte';
-	import type { AppState } from '$lib/types';
+	import type { AppState, Layer } from '$lib/types';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -49,6 +49,8 @@
 
 	let previewed: number[] = [];
 
+	let undoStack: Layer[][] = [];
+
 	$: {
 		if (typeof localStorage !== 'undefined') {
 			localStorage.setItem('savedData', JSON.stringify({ layers, x, y, backgroundColor }));
@@ -71,12 +73,19 @@
 			{activeCanvas}
 			{selectedPaletteIndex}
 			bind:previewed
+			bind:undoStack
 			{backgroundColor}
 		/>
 		<Optimizer {layers} {activeCanvas} />
 	</div>
 	<div class="sidebar">
 		<div class="container bg-dark flex flex-col py-8 px-2">
+			<button
+				on:click={() => {
+					layers = undoStack[undoStack.length - 1];
+					undoStack.pop();
+				}}>undo</button
+			>
 			<BackgroundControl bind:backgroundColor />
 			<DimensionControls bind:x bind:y bind:layers />
 			<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />

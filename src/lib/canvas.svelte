@@ -2,6 +2,7 @@
 	import Pixel from './pixel.svelte';
 	import type { Layer } from './types';
 	export let layers: Layer[];
+	export let undoStack: Layer[][];
 	export let activeCanvas: number;
 	export let previewed: number[];
 	export let backgroundColor: string;
@@ -56,6 +57,8 @@
 			{color}
 			handleClick={() => (layers[activeCanvas].canvas[i] = selectedPaletteIndex)}
 			isSelected={false}
+			bind:undoStack
+			bind:layers
 		/>
 	{/each}
 </div>

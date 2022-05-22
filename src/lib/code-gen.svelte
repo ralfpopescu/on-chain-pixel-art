@@ -12,8 +12,6 @@
 		encodeCanvas(canvas, compression, palette.length)
 	);
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
-
-	$: console.log({ canvasesEncoded, palettesEncoded });
 </script>
 
 <div class="flex flex-col">
