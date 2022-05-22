@@ -50,9 +50,11 @@
 	let previewed: number[] = [];
 
 	let undoStack: Layer[][] = [];
+	let redoStack: Layer[][] = [];
 
 	$: {
 		if (typeof localStorage !== 'undefined') {
+			console.log({ layers });
 			localStorage.setItem('savedData', JSON.stringify({ layers, x, y, backgroundColor }));
 		}
 	}
@@ -81,10 +83,23 @@
 	<div class="sidebar">
 		<div class="container bg-dark flex flex-col py-8 px-2">
 			<button
+				disabled={undoStack.length == 0}
+				style={undoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}
 				on:click={() => {
-					layers = undoStack[undoStack.length - 1];
+					const redo = [...layers];
+					layers = [...undoStack[undoStack.length - 1]];
 					undoStack.pop();
+					redoStack = [...redoStack, redo];
 				}}>undo</button
+			>
+			<button
+				on:click={() => {
+					layers = [...redoStack[redoStack.length - 1]];
+					redoStack.pop();
+					redoStack = [...redoStack];
+				}}
+				disabled={redoStack.length == 0}
+				style={redoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}>redo</button
 			>
 			<BackgroundControl bind:backgroundColor />
 			<DimensionControls bind:x bind:y bind:layers />
