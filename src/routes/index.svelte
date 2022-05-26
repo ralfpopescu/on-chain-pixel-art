@@ -5,6 +5,7 @@
 	import CanvasControls from '$lib/canvas-controls.svelte';
 	import BackgroundControl from '$lib/background-control.svelte';
 	import CodeControls from '$lib/code-controls.svelte';
+	import OnChainControl from '$lib/on-chain-control.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -64,6 +65,7 @@
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
+		<OnChainControl />
 		<Tabs bind:layers bind:activeCanvas bind:previewed />
 	</div>
 	<div class="canvas">
@@ -145,6 +147,8 @@
 
 	.tabs {
 		grid-area: tabs;
+		display: flex;
+		flex-direction: row;
 	}
 
 	.logo {
