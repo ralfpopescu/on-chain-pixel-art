@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { ethers } from 'ethers';
 	import Canvas from '$lib/canvas.svelte';
 	import Palette from '$lib/palette.svelte';
 	import DimensionControls from '$lib/dimension-controls.svelte';
@@ -11,8 +12,13 @@
 	import Tabs from '$lib/tabs.svelte';
 	import Optimizer from '$lib/optimizer.svelte';
 	import type { AppState, Layer } from '$lib/types';
+	import type { Renderer } from '../util/contract';
+	import { getRenderer } from '../util/contract';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+
+	let web3: { provider: ethers.providers.Web3Provider; signer: ethers.Signer };
+	let onChainRenderingEnabled = false;
 
 	const defaultX = 20;
 	const defaultY = 20;
@@ -65,22 +71,26 @@
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
-		<OnChainControl />
+		<OnChainControl bind:web3 bind:onChainRenderingEnabled />
 		<Tabs bind:layers bind:activeCanvas bind:previewed />
 	</div>
 	<div class="canvas">
-		<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
-		<Canvas
-			xDim={x}
-			yDim={y}
-			bind:layers
-			{activeCanvas}
-			{selectedPaletteIndex}
-			bind:previewed
-			bind:undoStack
-			{backgroundColor}
-		/>
-		<Optimizer {layers} {activeCanvas} />
+		{#if onChainRenderingEnabled}
+			<div>hi</div>
+		{:else}
+			<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
+			<Canvas
+				xDim={x}
+				yDim={y}
+				bind:layers
+				{activeCanvas}
+				{selectedPaletteIndex}
+				bind:previewed
+				bind:undoStack
+				{backgroundColor}
+			/>
+			<Optimizer {layers} {activeCanvas} />
+		{/if}
 	</div>
 	<div class="sidebar">
 		<div class="container bg-dark flex flex-col py-8 px-2">
