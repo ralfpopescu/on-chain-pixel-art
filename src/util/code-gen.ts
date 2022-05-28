@@ -14,7 +14,6 @@ type Packet = {
 };
 
 export const compressColors = (pixelCompression: number, canvas: number[]) => {
-	let pixel = 0;
 	const packets: Packet[] = [];
 
 	let endingPixel = canvas.length;
@@ -23,7 +22,10 @@ export const compressColors = (pixelCompression: number, canvas: number[]) => {
 		endingPixel -= 1;
 	}
 
-	console.log(endingPixel);
+	let pixel = 0;
+	while (canvas[pixel] == 0) {
+		pixel += 1;
+	}
 
 	while (pixel < endingPixel) {
 		let colorCount = 0;
@@ -164,20 +166,26 @@ const createMetadata = (canvas: number[], pixelCompression: number, colorCount: 
 		throw new Error(`Pixel compression too high: ${pixelCompression}`);
 	}
 
+	console.log({ startingIndex, pixelCompression, colorCount });
+
 	return ethers.BigNumber.from(startingIndex)
+		.and('0xFFF')
 		.shl(16)
 		.add(ethers.BigNumber.from(colorCount || 1).shl(4))
-		.add(pixelCompression || 1);
+		.add(pixelCompression || 1)
+		.and('0xFFFFFFF');
 };
 
 export const encodeCanvas = (canvas: number[], pixelCompression: number, colorCount: number) => {
+	const metadata = createMetadata(canvas, pixelCompression, colorCount);
 	const colorCompression = getColorCompression(colorCount);
 	const compressed = compressColors(pixelCompression, canvas);
 	const binary = packetsToBinary(compressed, pixelCompression, colorCompression);
 	const uint256s = binaryToUint256(binary, pixelCompression, colorCompression);
 	console.log({ uint256s });
-	const metadata = createMetadata(canvas, pixelCompression, colorCount);
+	console.log(metadata._hex);
 	uint256s[0] = ethers.BigNumber.from(uint256s[0]).shl(metadataLength).add(metadata)._hex;
+	console.log('okay', uint256s[0]);
 	return uint256s;
 };
 

@@ -7,6 +7,7 @@
 	import BackgroundControl from '$lib/background-control.svelte';
 	import CodeControls from '$lib/code-controls.svelte';
 	import OnChainControl from '$lib/on-chain-control.svelte';
+	import OnChainRenderer from '$lib/on-chain-renderer.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -19,6 +20,7 @@
 
 	let web3: { provider: ethers.providers.Web3Provider; signer: ethers.Signer };
 	let onChainRenderingEnabled = false;
+	$: renderer = !!web3 ? getRenderer(web3.provider) : null;
 
 	const defaultX = 20;
 	const defaultY = 20;
@@ -76,7 +78,7 @@
 	</div>
 	<div class="canvas">
 		{#if onChainRenderingEnabled}
-			<div>hi</div>
+			<OnChainRenderer {renderer} {layers} compression={4} {x} {y} />
 		{:else}
 			<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
 			<Canvas

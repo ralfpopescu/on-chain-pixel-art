@@ -34,6 +34,7 @@
   "type": "module",
   "dependencies": {
     "ethers": "^5.6.8",
-    "svelte-drag-and-drop-actions": "^1.0.0"
+    "svelte-drag-and-drop-actions": "^1.0.0",
+    "svelte-inline-svg": "^1.1.3"
   }
 }
