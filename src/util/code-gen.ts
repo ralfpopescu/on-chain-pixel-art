@@ -119,10 +119,10 @@ export const binaryToUint256 = (
 	const packetSize = pixelCompression + colorCompression;
 	const packetsPerLayer = Math.floor(256 / packetSize);
 	const packetsPerLayerOne = Math.floor((256 - metadataLength) / packetSize);
-	const layerOneLength = packetsPerLayerOne * packetSize + metadataLength;
+	const layerOneLength = packetsPerLayerOne * packetSize;
 	const layerLength = packetsPerLayer * packetSize;
 
-	if (binary.length <= 256) return [binaryToHex(binary)];
+	if (binary.length <= 256 - metadataLength) return [binaryToHex(binary)];
 
 	const uint256s = [];
 	let binaryReduction = binary;
@@ -131,8 +131,12 @@ export const binaryToUint256 = (
 	let layerOne = true;
 
 	while (processing && maxIterations < 256) {
-		if (binaryReduction.length <= 256) {
+		if (
+			(binaryReduction.length <= 256 && !layerOne) ||
+			(binaryReduction.length <= 256 - metadataLength && layerOne)
+		) {
 			processing = false;
+			console.log('DONE', binaryReduction.length, layerOne);
 			uint256s.push(binaryToHex(binaryReduction));
 			break;
 		}
@@ -141,12 +145,21 @@ export const binaryToUint256 = (
 			? binaryReduction.length - layerOneLength
 			: binaryReduction.length - layerLength;
 
-		const slice = layerOne
-			? binaryReduction.slice(limit, binaryReduction.length)
-			: binaryReduction.slice(limit, binaryReduction.length);
+		console.log({
+			limit,
+			length: binaryReduction.length,
+			layerOneLength,
+			layerLength,
+			packetsPerLayerOne,
+			packetSize
+		});
 
-		binaryReduction = binaryReduction.slice(0, binaryReduction.length - limit);
+		const slice = binaryReduction.slice(limit, binaryReduction.length);
+
+		binaryReduction = binaryReduction.slice(0, limit);
 		layerOne = false;
+
+		console.log('FIRST LAYER', binaryReduction.length, layerOne);
 
 		uint256s.push(binaryToHex(slice));
 

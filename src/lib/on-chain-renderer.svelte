@@ -16,16 +16,20 @@
 	);
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 
+	$: console.log({
+		canvas: canvasesEncoded ? canvasesEncoded[0] : null,
+		palette: palettesEncoded ? palettesEncoded[0] : null
+	});
+
 	$: fetchSrc = renderer.render(canvasesEncoded[0], palettesEncoded[0], x, y);
 </script>
 
 {#await fetchSrc}
 	<p>rendering...</p>
 {:then src}
-	<div>
-		{src}
+	<div style="width: 50%">
+		<SVG src={`data:image/svg+xml;base64,${btoa(src)}`} />
 	</div>
-	<SVG {src} />
 {:catch error}
 	<p style="color: red">{error.message}</p>
 {/await}
