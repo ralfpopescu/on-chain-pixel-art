@@ -218,3 +218,19 @@ export const encodePalette = (colors: string[]) => {
 
 	return encoded;
 };
+
+export const composePalettes = (palettes: string[][]) => {
+	const colors = [];
+	palettes.forEach((palette) => {
+		palette.forEach((p) => {
+			let pReduction = p;
+			// 0x
+			while (p.length > 2) {
+				colors.push(pReduction.slice(pReduction.length - 6, pReduction.length));
+			}
+			pReduction = pReduction.slice(0, pReduction.length - 6);
+		});
+	});
+
+	return encodePalette(colors);
+};
