@@ -1,18 +1,18 @@
 <script lang="ts">
 	import CodeGen from './code-gen.svelte';
 	import CodeBackup from './code-backup.svelte';
-	import type { Layer } from './types';
-	export let layers: Layer[];
+	import type { Tab } from './types';
+	export let tabs: Tab[];
 	export let activeCodeIndex = 0;
 </script>
 
 <div class="container bg-dark">
 	{#if activeCodeIndex == 0}
-		<CodeGen x={20} y={20} layerCount={2} compression={4} {layers} />
+		<CodeGen x={20} y={20} layerCount={2} compression={4} {tabs} />
 	{:else if activeCodeIndex == 1}
-		<CodeGen x={20} y={20} layerCount={2} compression={4} {layers} />
+		<CodeGen x={20} y={20} layerCount={2} compression={4} {tabs} />
 	{:else}
-		<CodeBackup x={20} y={20} {layers} />
+		<CodeBackup x={20} y={20} {tabs} />
 	{/if}
 </div>
 

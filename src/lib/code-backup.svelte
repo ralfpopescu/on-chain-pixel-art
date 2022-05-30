@@ -1,9 +1,9 @@
 <script lang="ts">
-	export let layers;
+	export let tabs;
 	export let x;
 	export let y;
 </script>
 
 <div>
-	{JSON.stringify({ layers, x, y }, null, 4)}
+	{JSON.stringify({ tabs, x, y }, null, 4)}
 </div>

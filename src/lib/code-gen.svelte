@@ -1,17 +1,22 @@
 <script lang="ts">
-	import type { Layer } from './types';
+	import type { Tab } from './types';
 	import { encodeCanvas, encodePalette } from '../util/code-gen';
 
-	export let layers: Layer[];
+	export let tabs: Tab[];
 	export let layerCount: number;
 	export let compression: number;
 	export let x: number;
 	export let y: number;
 
-	$: canvasesEncoded = layers.map(({ canvas, palette }) =>
+	const flatLayers = tabs.reduce((flattened, tab) => {
+		if (tab.type == 'layer') return [...flattened, tab];
+		return [...flattened, ...tab.layers];
+	}, []);
+
+	$: canvasesEncoded = flatLayers.map(({ canvas, palette }) =>
 		encodeCanvas(canvas, compression, palette.length)
 	);
-	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
+	$: palettesEncoded = flatLayers.map(({ palette }) => encodePalette(palette));
 </script>
 
 <div class="flex flex-col">
@@ -57,7 +62,7 @@
 	<span class="i2">renderer = <span class="d">IRenderer</span>(_renderer);</span>
 	{#each canvasesEncoded as asset, i}
 		<br />
-		<span class="i2 f">// {layers[i].name}</span>
+		<span class="i2 f">// {tabs[i].name}</span>
 		<span class="i2"
 			>assets[<span class="d">{i}</span>] = [<span class="d">{asset.join(', ')}</span>];</span
 		>

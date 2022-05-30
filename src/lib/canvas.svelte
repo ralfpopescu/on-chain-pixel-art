@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Pixel from './pixel.svelte';
-	import type { Tab } from './types';
 	import type { Tabber } from '../util/tabber';
-	export let tabs: Tab[];
-	export let undoStack: Tab[][];
+	import { store, getLayer } from '../store';
+import Tabs from './tabs.svelte';
+import Add from './graphics/add.svelte';
 	export let activeCanvas: number;
 	export let previewed: number[];
 	export let backgroundColor: string;
@@ -12,17 +12,16 @@
 	let canvas: string[];
 
 	$: {
-		if (previewed.length) {
-			// layer on top of active canvas
-			const composed = [...tabber.layer(activeCanvas).canvas].map((pixel) => {
+		if ($store.selected.previewed.length) {
+			const composed = [...getLayer(activeCanvas, $store).canvas].map((pixel) => {
 				if (pixel > 0) {
-					return tabber.layer(activeCanvas).palette[pixel - 1];
+					return getLayer(activeCanvas, $store).palette[pixel - 1];
 				}
 				return backgroundColor;
 			});
 
 			previewed.forEach((previewIndex) => {
-				const preview = tabber.layer(previewIndex).canvas;
+				const preview = getLayer(previewIndex, $store).canvas;
 				preview.forEach((pixel, i) => {
 					if (pixel > 0) {
 						composed[i] = tabber.layer(previewIndex).palette[pixel - 1];
@@ -32,9 +31,9 @@
 
 			canvas = composed;
 		} else {
-			canvas = tabber.layer(activeCanvas).canvas.map((pixel) => {
+			canvas = getLayer(activeCanvas, $store).canvas.map((pixel) => {
 				if (pixel > 0) {
-					return tabber.layer(activeCanvas).palette[pixel - 1];
+					return getLayer(activeCanvas, $store).palette[pixel - 1];
 				}
 				return backgroundColor;
 			});
@@ -57,10 +56,21 @@
 	{#each canvas as color, i}
 		<Pixel
 			{color}
-			handleClick={() => (tabber.layer(activeCanvas).canvas[i] = selectedPaletteIndex)}
+			handleClick={() => {
+				const { tabs, selected } = $store;
+				const updatedStore = { ...$store };
+				const tab = updatedStore.tabs[selected.activeCanvas];
+				
+				if(tab.type == 'layer') {
+					const { canvas } = updatedStore.tabs[selected.activeCanvas];
+					const updatedCanvas = [...canvas]
+					updatedCanvas[i] = selected.paletteIndex;
+					const updatedTabs = [...tabs];
+					updatedTabs[selected.activeCanvas] = { ...updatedTabs[selected.activeCanvas], canvas: updatedCanvas }
+					store.set({ ...$store, tabs: tabs[selected.activeCanvas] = { ...tabs[selected.activeCanvas], })
+				}
+			}}
 			isSelected={false}
-			bind:undoStack
-			bind:tabs
 		/>
 	{/each}
 </div>

@@ -14,9 +14,8 @@
 	import Optimizer from '$lib/optimizer.svelte';
 	import type { AppState, Layer } from '$lib/types';
 	import { getRenderer } from '../util/contract';
-	import { getTabber } from 'src/util/tabber';
-
-	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+	import { getTabber } from '../util/tabber';
+	import { randomColor } from '../util';
 
 	let web3: { provider: ethers.providers.Web3Provider; signer: ethers.Signer };
 	let onChainRenderingEnabled = false;
@@ -45,12 +44,14 @@
 
 	if (typeof localStorage !== 'undefined') {
 		const savedData = localStorage.getItem('savedData');
+		console.log({ savedData });
 		if (savedData) appState = JSON.parse(savedData);
 	}
 
 	let x = appState.x;
 	let y = appState.y;
 	let tabs = appState.tabs;
+	console.log({ tabs });
 	let backgroundColor = appState.backgroundColor;
 
 	let activeCanvas: number = 0;
@@ -132,7 +133,7 @@
 			>
 			<BackgroundControl bind:backgroundColor />
 			<DimensionControls bind:x bind:y bind:tabs />
-			<Palette bind:tabs bind:selectedPaletteIndex {activeCanvas} />
+			<Palette bind:selectedPaletteIndex {activeCanvas} {tabber} />
 		</div>
 	</div>
 	<div class="code">
