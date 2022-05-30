@@ -1,72 +1,84 @@
 <script lang="ts">
-	import type { Layer } from './types';
+	import type { Tab, Layer } from './types';
 	import Add from './graphics/add.svelte';
 	import Minus from './graphics/minus.svelte';
 
-	export let layers: Layer[];
+	export let tabs: Tab[];
 	export let x;
 	export let y;
 
-	const addNToX = (n: number) => {
-		const updatedLayers = layers.map((layer) => {
-			const { canvas } = layer;
-			const newCanvas = [];
-			canvas.forEach((p, i) => {
-				newCanvas.push(p);
-				if (i % x == 0) {
-					// push empty pixels at the end of a row
-					for (let j = 0; j < n; j += 1) {
-						newCanvas.push(0);
-					}
+	const processTab = (tab: Tab, n: number, callback: (tab: Tab, n: number) => Layer): Tab => {
+		if (tab.type == 'layer') {
+			return callback(tab, n);
+		} else {
+			const updatedLayers = tab.layers.map((layer) => callback(layer, n));
+			return { ...tab, layers: updatedLayers };
+		}
+	};
+
+	const addNToXLayer = (layer: Layer, n: number) => {
+		const { canvas } = layer;
+		const newCanvas = [];
+		canvas.forEach((p, i) => {
+			newCanvas.push(p);
+			if (i % x == 0) {
+				// push empty pixels at the end of a row
+				for (let j = 0; j < n; j += 1) {
+					newCanvas.push(0);
 				}
-			});
-			return { ...layer, canvas: newCanvas };
+			}
 		});
+		return { ...layer, canvas: newCanvas };
+	};
+
+	const addNToYLayer = (layer: Layer, n: number) => {
+		const { canvas } = layer;
+		const newCanvas = [...canvas];
+		for (let i = 0; i < n * x; i += 1) {
+			newCanvas.push(0);
+		}
+		return { ...layer, canvas: newCanvas };
+	};
+
+	const removeNFromXLayer = (layer: Layer, n: number) => {
+		const { canvas } = layer;
+		const newCanvas = [];
+		canvas.forEach((p, i) => {
+			if (i % x >= n) {
+				newCanvas.push(canvas[i]);
+			}
+		});
+		return { ...layer, canvas: newCanvas };
+	};
+
+	const removeNFromYLayer = (layer: Layer, n: number) => {
+		const { canvas } = layer;
+		const newCanvas = [];
+		for (let i = 0; i < canvas.length - x * n; i += 1) {
+			newCanvas.push(canvas[i]);
+		}
+
+		return { ...layer, canvas: newCanvas };
+	};
+
+	const addNToX = (n: number) => {
+		tabs = tabs.map((tab) => processTab(tab, n, addNToXLayer));
 		x = x + n;
-		layers = updatedLayers;
 	};
 
 	const addNToY = (n: number) => {
-		const updatedLayers = layers.map((layer) => {
-			const { canvas } = layer;
-			const newCanvas = [...canvas];
-			for (let i = 0; i < n * x; i += 1) {
-				newCanvas.push(0);
-			}
-			return { ...layer, canvas: newCanvas };
-		});
-
+		tabs = tabs.map((tab) => processTab(tab, n, addNToYLayer));
 		y = y + n;
-		layers = updatedLayers;
 	};
 
 	const removeNFromX = (n: number) => {
-		const updatedLayers = layers.map((layer) => {
-			const { canvas } = layer;
-			const newCanvas = [];
-			canvas.forEach((p, i) => {
-				if (i % x >= n) {
-					newCanvas.push(canvas[i]);
-				}
-			});
-			return { ...layer, canvas: newCanvas };
-		});
+		tabs = tabs.map((tab) => processTab(tab, n, removeNFromXLayer));
 		x = x - n;
-		layers = updatedLayers;
 	};
 
 	const removeNFromY = (n: number) => {
-		const updatedLayers = layers.map((layer) => {
-			const { canvas } = layer;
-			const newCanvas = [];
-			for (let i = 0; i < canvas.length - x * n; i += 1) {
-				newCanvas.push(canvas[i]);
-			}
-
-			return { ...layer, canvas: newCanvas };
-		});
+		tabs = tabs.map((tab) => processTab(tab, n, removeNFromYLayer));
 		y = y - n;
-		layers = updatedLayers;
 	};
 </script>
 

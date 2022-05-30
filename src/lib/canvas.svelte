@@ -1,38 +1,40 @@
 <script lang="ts">
 	import Pixel from './pixel.svelte';
-	import type { Layer } from './types';
-	export let layers: Layer[];
-	export let undoStack: Layer[][];
+	import type { Tab } from './types';
+	import type { Tabber } from '../util/tabber';
+	export let tabs: Tab[];
+	export let undoStack: Tab[][];
 	export let activeCanvas: number;
 	export let previewed: number[];
 	export let backgroundColor: string;
+	export let tabber: Tabber;
 
 	let canvas: string[];
 
 	$: {
 		if (previewed.length) {
 			// layer on top of active canvas
-			const composed = [...layers[activeCanvas].canvas].map((pixel) => {
+			const composed = [...tabber.layer(activeCanvas).canvas].map((pixel) => {
 				if (pixel > 0) {
-					return layers[activeCanvas].palette[pixel - 1];
+					return tabber.layer(activeCanvas).palette[pixel - 1];
 				}
 				return backgroundColor;
 			});
 
 			previewed.forEach((previewIndex) => {
-				const preview = layers[previewIndex].canvas;
+				const preview = tabber.layer(previewIndex).canvas;
 				preview.forEach((pixel, i) => {
 					if (pixel > 0) {
-						composed[i] = layers[previewIndex].palette[pixel - 1];
+						composed[i] = tabber.layer(previewIndex).palette[pixel - 1];
 					}
 				});
 			});
 
 			canvas = composed;
 		} else {
-			canvas = layers[activeCanvas].canvas.map((pixel) => {
+			canvas = tabber.layer(activeCanvas).canvas.map((pixel) => {
 				if (pixel > 0) {
-					return layers[activeCanvas].palette[pixel - 1];
+					return tabber.layer(activeCanvas).palette[pixel - 1];
 				}
 				return backgroundColor;
 			});
@@ -55,10 +57,10 @@
 	{#each canvas as color, i}
 		<Pixel
 			{color}
-			handleClick={() => (layers[activeCanvas].canvas[i] = selectedPaletteIndex)}
+			handleClick={() => (tabber.layer(activeCanvas).canvas[i] = selectedPaletteIndex)}
 			isSelected={false}
 			bind:undoStack
-			bind:layers
+			bind:tabs
 		/>
 	{/each}
 </div>

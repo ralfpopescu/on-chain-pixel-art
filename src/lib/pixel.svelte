@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { asDraggable } from 'svelte-drag-and-drop-actions';
-	import type { Layer } from './types';
+	import type { Tab } from './types';
+	import type { Tabber } from '../util/tabber';
 	export let color: string;
 	export let isSelected: boolean = false;
 	export let handleClick = () => null;
 	export let rounded = false;
 
-	export let undoStack: Layer[][];
-	export let layers: Layer[];
-	let snapshot: Layer[];
+	export let undoStack: Tab[][];
+	export let tabs: Tab[];
+	let snapshot: Tab[];
+
+	let tempSnap: Tab[];
+
+	const layerName = 'layer' as 'layer';
 </script>
 
 <div
@@ -19,20 +24,34 @@
 	on:click={handleClick}
 	on:dragover={handleClick}
 	on:mousedown={() => {
-		console.log('mousedown');
-		console.log(layers[0].canvas);
-		let snapshotLayers = [];
-		for (let i = 0; i < layers.length; i += 1) {
-			const { canvas, palette, name } = layers[i];
-			snapshotLayers[i] = { canvas: [...canvas], palette: [...palette], name };
+		tempSnap = [];
+		for (let i = 0; i < tabs.length; i += 1) {
+			const tab = tabs[i];
+			if (tab.type == 'layer')
+				tempSnap[i] = {
+					canvas: [...tab.canvas],
+					palette: [...tab.palette],
+					name: tab.name,
+					type: 'layer'
+				};
+			else {
+				const layersClone = tab.layers.map((layer) => ({
+					canvas: [...layer.canvas],
+					palette: [...layer.palette],
+					name: layer.name,
+					type: layerName
+				}));
+				tempSnap[i] = {
+					layers: layersClone,
+					name: tab.name,
+					type: 'attribute'
+				};
+			}
 		}
-		console.log({ snapshotLayers });
-		snapshot = [...snapshotLayers];
-		console.log(snapshot);
+		snapshot = [...tempSnap];
 	}}
 	on:dragend={() => {
 		undoStack = [...undoStack, snapshot];
-		console.log({ undoStack, snapshot, layers });
 		snapshot = null;
 	}}
 	use:asDraggable={{ Dummy: `<div style="opacity: 0; cursor: crosshair;">.</div>` }}

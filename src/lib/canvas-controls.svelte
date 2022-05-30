@@ -1,12 +1,15 @@
 <script lang="ts">
-	import type { Layer } from './types';
-	export let layers: Layer[];
+	import type { Tabber } from 'src/util/tabber';
+	import type { Tab } from './types';
+	export let tabs: Tab[];
 	export let activeCanvas: number;
 	export let selectedPaletteIndex: number;
+	export let selectedAttributes: number[];
+	export let tabber: Tabber;
 	let editMode;
 	let editName;
 
-	$: name = layers[activeCanvas].name;
+	$: name = tabber.layer(activeCanvas).name;
 </script>
 
 <div class="grid grid-cols-2 w-full p-4 bg-light/20">
@@ -15,7 +18,7 @@
 			<input
 				bind:value={editName}
 				on:blur={() => {
-					layers[activeCanvas].name = editName;
+					tabber.layer(activeCanvas).name = editName;
 					editMode = false;
 				}}
 			/>
@@ -33,7 +36,8 @@
 	</div>
 	<button
 		on:click={() => {
-			layers = layers.filter((_, i) => i !== activeCanvas);
+			tabs = tabs.filter((_, i) => i !== activeCanvas);
+			selectedAttributes = selectedAttributes.filter((_, i) => i !== activeCanvas);
 			activeCanvas = 0;
 			selectedPaletteIndex = 0;
 		}}>delete layer</button

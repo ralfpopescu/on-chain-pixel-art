@@ -13,8 +13,8 @@
 	import Tabs from '$lib/tabs.svelte';
 	import Optimizer from '$lib/optimizer.svelte';
 	import type { AppState, Layer } from '$lib/types';
-	import type { Renderer } from '../util/contract';
 	import { getRenderer } from '../util/contract';
+	import { getTabber } from 'src/util/tabber';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -30,11 +30,12 @@
 	const defaultBackgroundColor = '#ffffff';
 
 	let appState: AppState = {
-		layers: [
+		tabs: [
 			{
 				canvas: defaultCanvas,
 				palette: defaultPalette,
-				name: defaultName
+				name: defaultName,
+				type: 'layer'
 			}
 		],
 		x: defaultX,
@@ -49,12 +50,18 @@
 
 	let x = appState.x;
 	let y = appState.y;
-	let layers = appState.layers;
+	let tabs = appState.tabs;
 	let backgroundColor = appState.backgroundColor;
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
 	let activeCodeIndex = 0;
+	let selectedAttributes = [];
+
+	$: layers = tabs.map((tab, i) => {
+		if (tab.type == 'layer') return tab;
+		return tab.layers[selectedAttributes[i]];
+	});
 
 	let previewed: number[] = [];
 
@@ -63,28 +70,36 @@
 
 	$: {
 		if (typeof localStorage !== 'undefined') {
-			console.log({ layers });
-			localStorage.setItem('savedData', JSON.stringify({ layers, x, y, backgroundColor }));
+			localStorage.setItem('savedData', JSON.stringify({ tabs, x, y, backgroundColor }));
 		}
 	}
 
 	$: selectedPaletteIndex = 1;
+
+	const tabber = getTabber(tabs, selectedAttributes);
 </script>
 
 <div class="app h-screen bg-dark2 text-silver text-xs">
 	<div class="tabs">
 		<OnChainControl bind:web3 bind:onChainRenderingEnabled />
-		<Tabs bind:layers bind:activeCanvas bind:previewed />
+		<Tabs bind:tabs bind:activeCanvas bind:previewed {x} {y} />
 	</div>
 	<div class="canvas">
 		{#if onChainRenderingEnabled}
 			<OnChainRenderer {renderer} {layers} compression={4} {x} {y} {activeCanvas} {previewed} />
 		{:else}
-			<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
+			<CanvasControls
+				bind:tabs
+				bind:activeCanvas
+				bind:selectedPaletteIndex
+				bind:selectedAttributes
+				{tabber}
+			/>
 			<Canvas
 				xDim={x}
 				yDim={y}
-				bind:layers
+				bind:tabs
+				{tabber}
 				{activeCanvas}
 				{selectedPaletteIndex}
 				bind:previewed
@@ -116,12 +131,12 @@
 				style={redoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}>redo</button
 			>
 			<BackgroundControl bind:backgroundColor />
-			<DimensionControls bind:x bind:y bind:layers />
-			<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+			<DimensionControls bind:x bind:y bind:tabs />
+			<Palette bind:tabs bind:selectedPaletteIndex {activeCanvas} />
 		</div>
 	</div>
 	<div class="code">
-		<Code {layers} {activeCodeIndex} />
+		<Code {tabs} {activeCodeIndex} />
 	</div>
 	<div class="logo">
 		<Logo />
