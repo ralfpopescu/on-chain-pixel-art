@@ -71,63 +71,65 @@
 	$: selectedPaletteIndex = 1;
 </script>
 
-<div class="app h-screen bg-dark2 text-silver text-xs">
-	<div class="tabs">
-		<OnChainControl bind:web3 bind:onChainRenderingEnabled />
-		<Tabs bind:layers bind:activeCanvas bind:previewed />
-	</div>
-	<div class="canvas">
-		{#if onChainRenderingEnabled}
-			<OnChainRenderer {renderer} {layers} compression={4} {x} {y} {activeCanvas} {previewed} />
-		{:else}
-			<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
-			<Canvas
-				xDim={x}
-				yDim={y}
-				bind:layers
-				{activeCanvas}
-				{selectedPaletteIndex}
-				bind:previewed
-				bind:undoStack
-				{backgroundColor}
-			/>
-			<Optimizer {layers} {activeCanvas} />
-		{/if}
-	</div>
-	<div class="sidebar">
-		<div class="container bg-dark flex flex-col py-8 px-2">
-			<button
-				disabled={undoStack.length == 0}
-				style={undoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}
-				on:click={() => {
-					const redo = [...layers];
-					layers = [...undoStack[undoStack.length - 1]];
-					undoStack.pop();
-					redoStack = [...redoStack, redo];
-				}}>undo</button
-			>
-			<button
-				on:click={() => {
-					layers = [...redoStack[redoStack.length - 1]];
-					redoStack.pop();
-					redoStack = [...redoStack];
-				}}
-				disabled={redoStack.length == 0}
-				style={redoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}>redo</button
-			>
-			<BackgroundControl bind:backgroundColor />
-			<DimensionControls bind:x bind:y bind:layers />
-			<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+<div class="h-screen w-screen flex">
+	<div class="app bg-dark2 text-silver text-xs w-full">
+		<div class="tabs">
+			<OnChainControl bind:web3 bind:onChainRenderingEnabled />
+			<Tabs bind:layers bind:activeCanvas bind:previewed />
 		</div>
-	</div>
-	<div class="code">
-		<Code {layers} {activeCodeIndex} />
-	</div>
-	<div class="logo">
-		<Logo />
-	</div>
-	<div class="code-header">
-		<CodeControls bind:activeCodeIndex />
+		<div class="canvas">
+			{#if onChainRenderingEnabled}
+				<OnChainRenderer {renderer} {layers} compression={4} {x} {y} {activeCanvas} {previewed} />
+			{:else}
+				<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
+				<Canvas
+					xDim={x}
+					yDim={y}
+					bind:layers
+					{activeCanvas}
+					{selectedPaletteIndex}
+					bind:previewed
+					bind:undoStack
+					{backgroundColor}
+				/>
+				<Optimizer {layers} {activeCanvas} />
+			{/if}
+		</div>
+		<div class="sidebar">
+			<div class="container bg-dark flex flex-col py-8 px-2">
+				<button
+					disabled={undoStack.length == 0}
+					style={undoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}
+					on:click={() => {
+						const redo = [...layers];
+						layers = [...undoStack[undoStack.length - 1]];
+						undoStack.pop();
+						redoStack = [...redoStack, redo];
+					}}>undo</button
+				>
+				<button
+					on:click={() => {
+						layers = [...redoStack[redoStack.length - 1]];
+						redoStack.pop();
+						redoStack = [...redoStack];
+					}}
+					disabled={redoStack.length == 0}
+					style={redoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}>redo</button
+				>
+				<BackgroundControl bind:backgroundColor />
+				<DimensionControls bind:x bind:y bind:layers />
+				<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+			</div>
+		</div>
+		<div class="code">
+			<Code {layers} {activeCodeIndex} {x} {y} />
+		</div>
+		<div class="logo">
+			<Logo />
+		</div>
+		<div class="code-header">
+			<CodeControls bind:activeCodeIndex />
+		</div>
 	</div>
 </div>
 

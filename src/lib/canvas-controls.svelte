@@ -36,6 +36,7 @@
 			layers = layers.filter((_, i) => i !== activeCanvas);
 			activeCanvas = 0;
 			selectedPaletteIndex = 0;
-		}}>delete layer</button
+		}}
+		disabled={true}>delete layer</button
 	>
 </div>

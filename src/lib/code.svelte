@@ -4,15 +4,17 @@
 	import type { Layer } from './types';
 	export let layers: Layer[];
 	export let activeCodeIndex = 0;
+	export let x;
+	export let y;
 </script>
 
 <div class="container bg-dark">
 	{#if activeCodeIndex == 0}
-		<CodeGen x={20} y={20} layerCount={2} compression={4} {layers} />
+		<CodeGen {x} {y} layerCount={2} compression={4} {layers} />
 	{:else if activeCodeIndex == 1}
-		<CodeGen x={20} y={20} layerCount={2} compression={4} {layers} />
+		<CodeGen {x} {y} layerCount={2} compression={4} {layers} />
 	{:else}
-		<CodeBackup x={20} y={20} {layers} />
+		<CodeBackup {x} {y} {layers} />
 	{/if}
 </div>
 
@@ -20,7 +22,6 @@
 	.container {
 		color: white;
 		opacity: 0.95;
-		padding: 16px;
 		overflow: auto;
 		height: 800px;
 	}

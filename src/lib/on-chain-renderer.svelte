@@ -56,8 +56,10 @@
 					colorCount += layers[i].palette.length;
 				}
 				console.log('composed!!');
+
 				return renderer.render(composition, composedPalette, x, y);
 			}
+			console.log({ x, y });
 			return renderer.render(canvasesEncoded[activeCanvas], palettesEncoded[activeCanvas], x, y);
 		} catch (e) {
 			console.log(e);
@@ -76,5 +78,5 @@
 		<SVG src={`data:image/svg+xml;base64,${btoa(src)}`} />
 	</div>
 {:catch error}
-	<p style="color: red">{error}</p>
+	<p style="color: red; max-width: 500px; overflow: hidden;">{error}</p>
 {/await}

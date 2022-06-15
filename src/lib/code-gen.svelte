@@ -8,9 +8,9 @@
 	export let x: number;
 	export let y: number;
 
-	$: canvasesEncoded = layers.map(({ canvas, palette }) =>
-		encodeCanvas(canvas, compression, palette.length)
-	);
+	$: canvasesEncoded = layers
+		.sort((a, b) => a.name.localeCompare(b.name))
+		.map(({ canvas, palette }) => encodeCanvas(canvas, compression, palette.length));
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 </script>
 
@@ -60,14 +60,6 @@
 		<span class="i2 f">// {layers[i].name}</span>
 		<span class="i2"
 			>assets[<span class="d">{i}</span>] = [<span class="d">{asset.join(', ')}</span>];</span
-		>
-		<span class="i2"
-			>palettes[<span class="d">{i}</span>] = [<span class="d">{palettesEncoded[i].join(',')}</span
-			>];</span
-		>
-		<span class="i2"
-			>colorCounts[<span class="d">{i}</span>] =
-			<span class="d">{palettesEncoded[i].length}</span>;</span
 		>
 	{/each}
 	<span class="i1">}</span>
