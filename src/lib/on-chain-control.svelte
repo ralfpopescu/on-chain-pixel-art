@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Chain from './graphics/chain.svelte';
+	import Draw from './graphics/draw.svelte';
 	import { ethers } from 'ethers';
 	export let web3: { provider: ethers.providers.Web3Provider; signer: ethers.Signer };
 	export let onChainRenderingEnabled: boolean;
@@ -24,7 +25,9 @@
 		<button
 			class="w-60 buttonRow"
 			on:click={() => (onChainRenderingEnabled = !onChainRenderingEnabled)}
-			><div style="margin-right: 8px"><Chain /></div>
+			><div style="margin-right: 8px">
+				{#if onChainRenderingEnabled}<Draw />{:else}<Chain />{/if}
+			</div>
 			{buttonMessage}</button
 		>
 	{/if}
