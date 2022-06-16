@@ -1,4 +1,4 @@
-<div class="container h-full">on-chain pixel project</div>
+<div class="container h-full bg-light/20">ON-CHAIN PIXEL ART</div>
 
 <style>
 	.container {

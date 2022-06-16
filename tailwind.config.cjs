@@ -3,12 +3,13 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				main: ['"Inconsolata"', 'monospace']
+				main: ['"Inconsolata"', 'monospace'],
+				'press-start': ['"Major Mono Display"', 'monospace']
 			},
 			colors: {
-				dark: '#1f1a36',
-				dark2: '#0f0b24',
-				light: '#474056',
+				dark: '#333330',
+				dark2: '#1c1c19',
+				light: '#66665f',
 				secondary: '#474056',
 				tertiary: '#474056',
 				emphasis: '#B9C6AE',

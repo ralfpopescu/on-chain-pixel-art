@@ -71,7 +71,7 @@
 	$: selectedPaletteIndex = 1;
 </script>
 
-<div class="h-screen w-screen flex">
+<div class="h-screen w-screen flex font-press-start">
 	<div class="app bg-dark2 text-silver text-xs w-full">
 		<div class="tabs">
 			<OnChainControl bind:web3 bind:onChainRenderingEnabled />
@@ -146,8 +146,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 20px;
-		padding-bottom: 30%;
+		gap: 120px;
+		padding-bottom: 20%;
 	}
 
 	.sidebar {

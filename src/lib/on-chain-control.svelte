@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Chain from './graphics/chain.svelte';
 	import { ethers } from 'ethers';
 	export let web3: { provider: ethers.providers.Web3Provider; signer: ethers.Signer };
 	export let onChainRenderingEnabled: boolean;
@@ -15,12 +16,27 @@
 
 {#if typeof window !== 'undefined' && window?.ethereum}
 	{#if !web3 || !web3.provider}
-		<button class="w-36" on:click={handleConnect}>connect</button>
+		<button class="w-60 buttonRow" on:click={handleConnect}
+			><div style="margin-right: 8px"><Chain /></div>
+			connect</button
+		>
 	{:else}
-		<button class="w-36" on:click={() => (onChainRenderingEnabled = !onChainRenderingEnabled)}
-			>{buttonMessage}</button
+		<button
+			class="w-60 buttonRow"
+			on:click={() => (onChainRenderingEnabled = !onChainRenderingEnabled)}
+			><div style="margin-right: 8px"><Chain /></div>
+			{buttonMessage}</button
 		>
 	{/if}
 {:else}
 	Get Metamask
 {/if}
+
+<style>
+	.buttonRow {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
