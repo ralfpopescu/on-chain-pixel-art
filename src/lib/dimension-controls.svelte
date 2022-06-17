@@ -70,8 +70,9 @@
 	};
 </script>
 
-<div>
-	<div class="flex flex-row justify-center align-center text-2xl">
+<div class="flex flex-col gap-4">
+	dimensions
+	<div class="flex flex-row justify-center align-center text-s">
 		<div
 			on:click={() => removeNFromX(1)}
 			class="flex flex-row justify-center align-center mr-4"
@@ -88,10 +89,10 @@
 			<Add />
 		</div>
 	</div>
-	<div class="flex flex-row justify-center align-center text-2xl">
+	<div class="flex flex-row justify-center align-center text-s w-full">
 		<div
 			on:click={() => removeNFromY(1)}
-			class="flex flex-row justify-center align-center mr-4"
+			class="flex flex-row justify-start align-center mr-4"
 			role="button"
 		>
 			<Minus />
@@ -99,7 +100,7 @@
 		<dix>y({y})</dix>
 		<div
 			on:click={() => addNToY(1)}
-			class="flex flex-row justify-center align-center ml-4"
+			class="flex flex-row justify-end align-center ml-4"
 			role="button"
 		>
 			<Add />

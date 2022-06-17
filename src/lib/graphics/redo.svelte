@@ -6,6 +6,7 @@
 	x="0px"
 	y="0px"
 	viewBox="0 0 512 512"
+	transform="scale(-1,1)"
 	style="enable-background:new 0 0 512 512; width: 32px; fill: rgba(255,255,255,0.7);"
 	xml:space="preserve"
 >

@@ -11,8 +11,8 @@
 	$: name = layers[activeCanvas].name;
 </script>
 
-<div class="grid grid-cols-2 w-full p-4 bg-light/20">
-	<div class="text-lg flex gap-8">
+<div class="flex flex-row w-full px-8 py-4 bg-light/20">
+	<div class="text-lg flex gap-4 grow">
 		{#if editMode}
 			<input
 				bind:value={editName}
@@ -35,7 +35,7 @@
 		<Edit />
 	</div>
 	<button
-		class="flex flex-row justify-center align-center"
+		class="flex flex-row justify-center items-center gap-4 text-xs"
 		on:click={() => {
 			layers = layers.filter((_, i) => i !== activeCanvas);
 			activeCanvas = 0;
@@ -44,3 +44,5 @@
 		disabled={true}><Trash />delete layer</button
 	>
 </div>
+
+<style></style>

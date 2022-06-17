@@ -6,6 +6,9 @@ module.exports = {
 				main: ['"Inconsolata"', 'monospace'],
 				'press-start': ['"Major Mono Display"', 'monospace']
 			},
+			fontSize: {
+				xxs: '.6rem'
+			},
 			colors: {
 				dark: '#333330',
 				dark2: '#1c1c19',

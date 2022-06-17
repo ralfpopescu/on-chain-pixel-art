@@ -2,8 +2,8 @@
 	export let backgroundColor: string;
 </script>
 
-<div>
-	Background Color
+<div class="flex flex-col">
+	background color
 	<div class="flex flex-row w-40 px-2 py-2 text-dark">
 		<div
 			style={`background-color: ${backgroundColor}`}

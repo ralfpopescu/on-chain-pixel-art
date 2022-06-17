@@ -8,7 +8,8 @@
 	export let activeCanvas;
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col text-xs">
+	palette
 	{#each layers[activeCanvas].palette as _, i}
 		<PaletteColor
 			bind:layers
@@ -20,20 +21,20 @@
 			isSelected={selectedPaletteIndex - 1 === i}
 		/>
 	{/each}
-	<div class="flex flex-row content-center">
-		<div
-			class="w-8 h-8 flex justify-center content-center mx-2"
-			on:click={() => (layers[activeCanvas].palette = [...layers[activeCanvas].palette, '#000000'])}
-			role="button"
-		>
-			<Add />
-		</div>
+	<div
+		class="w-full h-8 flex justify-start items-center mx-2 text-xxs gap-4"
+		on:click={() => (layers[activeCanvas].palette = [...layers[activeCanvas].palette, '#000000'])}
+		role="button"
+	>
+		<Add />
+		add color to palette
 	</div>
 	<div
-		class="w-8 h-8 flex my-2 justify-center content-center mx-2"
+		class="w-full h-8 flex justify-start items-center mx-2 text-xxs gap-4"
 		role="button"
 		on:click={() => (selectedPaletteIndex = 0)}
 	>
 		<Eraser />
+		erase
 	</div>
 </div>

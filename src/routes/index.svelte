@@ -15,6 +15,8 @@
 	import type { AppState, Layer } from '$lib/types';
 	import type { Renderer } from '../util/contract';
 	import { getRenderer } from '../util/contract';
+	import Undo from '$lib/graphics/undo.svelte';
+	import Redo from '$lib/graphics/redo.svelte';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -96,29 +98,32 @@
 			{/if}
 		</div>
 		<div class="sidebar">
-			<div class="container bg-dark flex flex-col py-8 px-2">
-				<button
-					disabled={undoStack.length == 0}
-					style={undoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}
-					on:click={() => {
-						const redo = [...layers];
-						layers = [...undoStack[undoStack.length - 1]];
-						undoStack.pop();
-						redoStack = [...redoStack, redo];
-					}}>undo</button
-				>
-				<button
-					on:click={() => {
-						layers = [...redoStack[redoStack.length - 1]];
-						redoStack.pop();
-						redoStack = [...redoStack];
-					}}
-					disabled={redoStack.length == 0}
-					style={redoStack.length == 0 ? 'opacity: 0.7; cursor: not-allowed;' : ''}>redo</button
-				>
+			<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
 				<BackgroundControl bind:backgroundColor />
 				<DimensionControls bind:x bind:y bind:layers />
 				<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+				<div class="flex flex-row gap-4 justify-start items-start text-xxs">
+					<button
+						disabled={undoStack.length == 0}
+						style={undoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
+						on:click={() => {
+							const redo = [...layers];
+							layers = [...undoStack[undoStack.length - 1]];
+							undoStack.pop();
+							redoStack = [...redoStack, redo];
+						}}><Undo /> undo</button
+					>
+					<button
+						on:click={() => {
+							layers = [...redoStack[redoStack.length - 1]];
+							redoStack.pop();
+							redoStack = [...redoStack];
+						}}
+						disabled={redoStack.length == 0}
+						style={redoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
+						><Redo /> redo</button
+					>
+				</div>
 			</div>
 		</div>
 		<div class="code">
