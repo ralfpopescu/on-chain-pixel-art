@@ -8,7 +8,7 @@
 	export let activeCanvas;
 </script>
 
-<div class="flex flex-col text-xs">
+<div class="flex flex-col text-xs container gap-1">
 	palette
 	{#each layers[activeCanvas].palette as _, i}
 		<PaletteColor
@@ -22,7 +22,7 @@
 		/>
 	{/each}
 	<div
-		class="w-full h-8 flex justify-start items-center mx-2 text-xxs gap-4"
+		class="w-full h-8 flex justify-start items-center mx-3 text-xxs gap-4 my-4"
 		on:click={() => (layers[activeCanvas].palette = [...layers[activeCanvas].palette, '#000000'])}
 		role="button"
 	>
@@ -38,3 +38,10 @@
 		erase
 	</div>
 </div>
+
+<style>
+	.container {
+		max-height: 500px;
+		overflow: auto;
+	}
+</style>

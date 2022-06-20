@@ -61,6 +61,10 @@
 		<span class="i2"
 			>assets[<span class="d">{i}</span>] = [<span class="d">{asset.join(', ')}</span>];</span
 		>
+		<span class="i2"
+			>palettes[<span class="d">{i}</span>] = [<span class="d">{palettesEncoded[i].join(', ')}</span
+			>];</span
+		>
 	{/each}
 	<span class="i1">}</span>
 	<br />

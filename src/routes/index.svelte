@@ -102,7 +102,7 @@
 				<BackgroundControl bind:backgroundColor />
 				<DimensionControls bind:x bind:y bind:layers />
 				<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
-				<div class="flex flex-row gap-4 justify-start items-start text-xxs">
+				<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">
 					<button
 						disabled={undoStack.length == 0}
 						style={undoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
@@ -153,6 +153,7 @@
 		align-items: center;
 		gap: 120px;
 		padding-bottom: 20%;
+		overflow: auto;
 	}
 
 	.sidebar {
