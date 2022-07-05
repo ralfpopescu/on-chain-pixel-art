@@ -10,6 +10,25 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "base64Encode",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256[]",
         name: "layer1",
         type: "uint256[]",
@@ -21,22 +40,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "colorCount1",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "colorCount2",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "totalPixels",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "pixelCompression",
         type: "uint256",
       },
     ],
@@ -118,6 +122,25 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256[]",
+        name: "layer",
+        type: "uint256[]",
+      },
+    ],
+    name: "getColorCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "colorCount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
         name: "pixels",
         type: "uint256[]",
       },
@@ -138,12 +161,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "colorCount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "pixelCompression",
+        name: "backgroundColor",
         type: "uint256",
       },
     ],
@@ -156,6 +174,82 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "toHexString",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "toString",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+    ],
+    name: "uri",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+    ],
+    name: "uriSvg",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "pure",
     type: "function",
   },
 ];

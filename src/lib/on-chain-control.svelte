@@ -32,7 +32,7 @@
 		>
 	{/if}
 {:else}
-	Get Metamask
+	<a class="w-60 buttonRow" href="https://metamask.io/" target="_blank">Get Metamask</a>
 {/if}
 
 <style>

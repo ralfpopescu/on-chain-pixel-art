@@ -20,13 +20,22 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface RendererInterface extends ethers.utils.Interface {
   functions: {
+    "base64Encode(bytes)": FunctionFragment;
     "composeLayers(uint256[],uint256[],uint256)": FunctionFragment;
     "composePalettes(uint256[],uint256[],uint256,uint256)": FunctionFragment;
     "encodeColorArray(uint256[],uint256,uint256)": FunctionFragment;
-    "render(uint256[],uint256[],uint256,uint256)": FunctionFragment;
+    "getColorCount(uint256[])": FunctionFragment;
+    "render(uint256[],uint256[],uint256,uint256,uint256)": FunctionFragment;
+    "toHexString(uint256)": FunctionFragment;
     "toString(uint256)": FunctionFragment;
+    "uri(string)": FunctionFragment;
+    "uriSvg(string)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "base64Encode",
+    values: [BytesLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "composeLayers",
     values: [BigNumberish[], BigNumberish[], BigNumberish]
@@ -40,14 +49,34 @@ interface RendererInterface extends ethers.utils.Interface {
     values: [BigNumberish[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getColorCount",
+    values: [BigNumberish[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "render",
-    values: [BigNumberish[], BigNumberish[], BigNumberish, BigNumberish]
+    values: [
+      BigNumberish[],
+      BigNumberish[],
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "toHexString",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "toString",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "uri", values: [string]): string;
+  encodeFunctionData(functionFragment: "uriSvg", values: [string]): string;
 
+  decodeFunctionResult(
+    functionFragment: "base64Encode",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "composeLayers",
     data: BytesLike
@@ -60,8 +89,18 @@ interface RendererInterface extends ethers.utils.Interface {
     functionFragment: "encodeColorArray",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getColorCount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "render", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "toHexString",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "toString", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "uriSvg", data: BytesLike): Result;
 
   events: {};
 }
@@ -110,6 +149,8 @@ export class Renderer extends BaseContract {
   interface: RendererInterface;
 
   functions: {
+    base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
     composeLayers(
       layer1: BigNumberish[],
       layer2: BigNumberish[],
@@ -132,16 +173,39 @@ export class Renderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]] & { encoded: BigNumber[] }>;
 
+    getColorCount(
+      layers: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { colorCount: BigNumber }>;
+
     render(
       pixels: BigNumberish[],
       pallette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
+      backgroundColor: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string] & { svg: string }>;
 
+    toHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     toString(value: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    uri(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
+
+    uriSvg(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
   };
+
+  base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<string>;
 
   composeLayers(
     layer1: BigNumberish[],
@@ -165,17 +229,31 @@ export class Renderer extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
+  getColorCount(
+    layers: BigNumberish[],
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   render(
     pixels: BigNumberish[],
     pallette: BigNumberish[],
     xDim: BigNumberish,
     yDim: BigNumberish,
+    backgroundColor: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
+  toHexString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
   toString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  uri(data: string, overrides?: CallOverrides): Promise<string>;
+
+  uriSvg(data: string, overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
+    base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<string>;
+
     composeLayers(
       layer1: BigNumberish[],
       layer2: BigNumberish[],
@@ -198,20 +276,40 @@ export class Renderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
+    getColorCount(
+      layers: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     render(
       pixels: BigNumberish[],
       pallette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    toHexString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
     toString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    uri(data: string, overrides?: CallOverrides): Promise<string>;
+
+    uriSvg(data: string, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
+    base64Encode(
+      data: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     composeLayers(
       layer1: BigNumberish[],
       layer2: BigNumberish[],
@@ -234,11 +332,22 @@ export class Renderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getColorCount(
+      layers: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     render(
       pixels: BigNumberish[],
       pallette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    toHexString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -246,9 +355,18 @@ export class Renderer extends BaseContract {
       value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    uri(data: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    uriSvg(data: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    base64Encode(
+      data: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     composeLayers(
       layer1: BigNumberish[],
       layer2: BigNumberish[],
@@ -271,16 +389,34 @@ export class Renderer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getColorCount(
+      layers: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     render(
       pixels: BigNumberish[],
       pallette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    toHexString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     toString(
       value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    uri(data: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    uriSvg(
+      data: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

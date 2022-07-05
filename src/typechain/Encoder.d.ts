@@ -18,25 +18,31 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface ComposerTestInterface extends ethers.utils.Interface {
+interface EncoderInterface extends ethers.utils.Interface {
   functions: {
-    "renderLayers(uint256[])": FunctionFragment;
+    "toHexString(uint256)": FunctionFragment;
+    "toString(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "renderLayers",
-    values: [BigNumberish[]]
+    functionFragment: "toHexString",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "toString",
+    values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "renderLayers",
+    functionFragment: "toHexString",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "toString", data: BytesLike): Result;
 
   events: {};
 }
 
-export class ComposerTest extends BaseContract {
+export class Encoder extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -77,39 +83,52 @@ export class ComposerTest extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: ComposerTestInterface;
+  interface: EncoderInterface;
 
   functions: {
-    renderLayers(
-      layerIds: BigNumberish[],
+    toHexString(
+      value: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[string] & { svg: string }>;
+    ): Promise<[string]>;
+
+    toString(value: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  renderLayers(
-    layerIds: BigNumberish[],
-    overrides?: CallOverrides
-  ): Promise<string>;
+  toHexString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  toString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    renderLayers(
-      layerIds: BigNumberish[],
+    toHexString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    toString(value: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
-    renderLayers(
-      layerIds: BigNumberish[],
+    toHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    toString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    renderLayers(
-      layerIds: BigNumberish[],
+    toHexString(
+      value: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    toString(
+      value: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

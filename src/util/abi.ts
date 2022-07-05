@@ -2,6 +2,25 @@ export const abi = [
 	{
 		inputs: [
 			{
+				internalType: 'bytes',
+				name: 'data',
+				type: 'bytes'
+			}
+		],
+		name: 'base64Encode',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string'
+			}
+		],
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
 				internalType: 'uint256[]',
 				name: 'layer1',
 				type: 'uint256[]'
@@ -25,7 +44,7 @@ export const abi = [
 				type: 'uint256[]'
 			}
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function'
 	},
 	{
@@ -59,7 +78,7 @@ export const abi = [
 				type: 'uint256[]'
 			}
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function'
 	},
 	{
@@ -88,19 +107,38 @@ export const abi = [
 				type: 'uint256[]'
 			}
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function'
 	},
 	{
 		inputs: [
 			{
 				internalType: 'uint256[]',
-				name: 'pixels',
+				name: 'layers',
+				type: 'uint256[]'
+			}
+		],
+		name: 'getColorCount',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: 'colorCount',
+				type: 'uint256'
+			}
+		],
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256[]',
+				name: 'canvas',
 				type: 'uint256[]'
 			},
 			{
 				internalType: 'uint256[]',
-				name: 'pallette',
+				name: 'palette',
 				type: 'uint256[]'
 			},
 			{
@@ -112,6 +150,11 @@ export const abi = [
 				internalType: 'uint256',
 				name: 'yDim',
 				type: 'uint256'
+			},
+			{
+				internalType: 'uint256',
+				name: 'backgroundColor',
+				type: 'uint256'
 			}
 		],
 		name: 'render',
@@ -122,7 +165,26 @@ export const abi = [
 				type: 'string'
 			}
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'uint256',
+				name: 'value',
+				type: 'uint256'
+			}
+		],
+		name: 'toHexString',
+		outputs: [
+			{
+				internalType: 'string',
+				name: '',
+				type: 'string'
+			}
+		],
+		stateMutability: 'pure',
 		type: 'function'
 	},
 	{
@@ -138,6 +200,44 @@ export const abi = [
 			{
 				internalType: 'string',
 				name: '',
+				type: 'string'
+			}
+		],
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: 'data',
+				type: 'string'
+			}
+		],
+		name: 'uri',
+		outputs: [
+			{
+				internalType: 'string',
+				name: 'encoded',
+				type: 'string'
+			}
+		],
+		stateMutability: 'pure',
+		type: 'function'
+	},
+	{
+		inputs: [
+			{
+				internalType: 'string',
+				name: 'data',
+				type: 'string'
+			}
+		],
+		name: 'uriSvg',
+		outputs: [
+			{
+				internalType: 'string',
+				name: 'encoded',
 				type: 'string'
 			}
 		],

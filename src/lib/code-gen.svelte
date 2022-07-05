@@ -35,14 +35,6 @@
 		<span class="b">private</span> palettes;</span
 	>
 	<span class="i1"
-		><span class="a">uint256</span>[<span class="d">{layerCount}</span>]
-		<span class="b">private</span> colorCounts;</span
-	>
-	<span class="i1"
-		><span class="a">uint256</span> <span class="b">private constant</span> COMPRESSION =
-		<span class="d">{compression}</span>;</span
-	>
-	<span class="i1"
 		><span class="a">uint256</span> <span class="b">private constant</span> X =
 		<span class="d">{x}</span>;</span
 	>
@@ -102,10 +94,7 @@
 	<span class="i3">composedLayers = renderer.<span class="d">composeLayers</span>(</span>
 	<span class="i4">composedLayers,</span>
 	<span class="i4">assets[nextLayer],</span>
-	<span class="i4">colorCount,</span>
-	<span class="i4">colorCounts[nextLayer],</span>
 	<span class="i4">X * Y,</span>
-	<span class="i4">COMPRESSION</span>
 	<span class="i3">);</span>
 	<br />
 	<span class="i3">composedPalettes = renderer.<span class="d">composePalettes</span>(</span>
@@ -123,9 +112,7 @@
 	<span class="i4">composedLayers,</span>
 	<span class="i4">composedPalettes,</span>
 	<span class="i4">X,</span>
-	<span class="i4">Y,</span>
-	<span class="i4">colorCount,</span>
-	<span class="i4">COMPRESSION</span>
+	<span class="i4">Y</span>
 	<span class="i3">);</span>
 	<span class="i1">}</span>
 	<span>}</span>

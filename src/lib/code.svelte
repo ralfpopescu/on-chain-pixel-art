@@ -1,5 +1,6 @@
 <script lang="ts">
 	import CodeGen from './code-gen.svelte';
+	import CodeInterface from './code-gen-interface.svelte';
 	import CodeBackup from './code-backup.svelte';
 	import type { Layer } from './types';
 	export let layers: Layer[];
@@ -12,7 +13,7 @@
 	{#if activeCodeIndex == 0}
 		<CodeGen {x} {y} layerCount={2} compression={4} {layers} />
 	{:else if activeCodeIndex == 1}
-		<CodeGen {x} {y} layerCount={2} compression={4} {layers} />
+		<CodeInterface />
 	{:else}
 		<CodeBackup {x} {y} {layers} />
 	{/if}

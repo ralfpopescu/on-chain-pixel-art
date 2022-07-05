@@ -18,7 +18,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface IRendererInterface extends ethers.utils.Interface {
+interface OnChainPixelArtLibraryInterface extends ethers.utils.Interface {
   functions: {
     "base64Encode(bytes)": FunctionFragment;
     "composeLayers(uint256[],uint256[],uint256)": FunctionFragment;
@@ -105,7 +105,7 @@ interface IRendererInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class IRenderer extends BaseContract {
+export class OnChainPixelArtLibrary extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -146,7 +146,7 @@ export class IRenderer extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: IRendererInterface;
+  interface: OnChainPixelArtLibraryInterface;
 
   functions: {
     base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<[string]>;
@@ -174,13 +174,13 @@ export class IRenderer extends BaseContract {
     ): Promise<[BigNumber[]] & { encoded: BigNumber[] }>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { colorCount: BigNumber }>;
 
     render(
-      pixels: BigNumberish[],
-      pallette: BigNumberish[],
+      canvas: BigNumberish[],
+      palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
       backgroundColor: BigNumberish,
@@ -194,9 +194,15 @@ export class IRenderer extends BaseContract {
 
     toString(value: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    uri(data: string, overrides?: CallOverrides): Promise<[string]>;
+    uri(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
 
-    uriSvg(data: string, overrides?: CallOverrides): Promise<[string]>;
+    uriSvg(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
   };
 
   base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<string>;
@@ -224,13 +230,13 @@ export class IRenderer extends BaseContract {
   ): Promise<BigNumber[]>;
 
   getColorCount(
-    layer: BigNumberish[],
+    layers: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   render(
-    pixels: BigNumberish[],
-    pallette: BigNumberish[],
+    canvas: BigNumberish[],
+    palette: BigNumberish[],
     xDim: BigNumberish,
     yDim: BigNumberish,
     backgroundColor: BigNumberish,
@@ -271,13 +277,13 @@ export class IRenderer extends BaseContract {
     ): Promise<BigNumber[]>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     render(
-      pixels: BigNumberish[],
-      pallette: BigNumberish[],
+      canvas: BigNumberish[],
+      palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
       backgroundColor: BigNumberish,
@@ -327,13 +333,13 @@ export class IRenderer extends BaseContract {
     ): Promise<BigNumber>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     render(
-      pixels: BigNumberish[],
-      pallette: BigNumberish[],
+      canvas: BigNumberish[],
+      palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
       backgroundColor: BigNumberish,
@@ -384,13 +390,13 @@ export class IRenderer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     render(
-      pixels: BigNumberish[],
-      pallette: BigNumberish[],
+      canvas: BigNumberish[],
+      palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
       backgroundColor: BigNumberish,

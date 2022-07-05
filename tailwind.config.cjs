@@ -4,10 +4,15 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				main: ['"Inconsolata"', 'monospace'],
-				'press-start': ['"Major Mono Display"', 'monospace']
+				// 'press-start': ['"Major Mono Display"', 'monospace']
+				'press-start': ['"Inconsolata"', 'monospace']
 			},
 			fontSize: {
-				xxs: '.6rem'
+				xxs: '.5rem',
+				xs: '.6rem',
+				s: '.7rem',
+				lg: '.8rem',
+				xl: '.9rem'
 			},
 			colors: {
 				dark: '#333330',

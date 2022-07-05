@@ -8,6 +8,7 @@
 	export let renderer: Renderer;
 	export let layers: Layer[];
 	export let compression: number;
+	export let backgroundColor: string;
 	export let x: number;
 	export let y: number;
 
@@ -32,7 +33,8 @@
 			if (previewed.length > 0) {
 				const previewedStack = previewed.map((index) => ({
 					canvas: canvasesEncoded[index],
-					palette: palettesEncoded[index]
+					palette: palettesEncoded[index],
+					colorCount: layers[index].palette.length
 				}));
 
 				let composition = canvasesEncoded[activeCanvas];
@@ -43,24 +45,31 @@
 				for (let i = 0; i < previewedStack.length; i += 1) {
 					console.log('LOOOOP');
 					console.log({ previewed, i });
-					composition = await renderer.composeCanvases(composition, canvasesEncoded[i], x * y);
+					composition = await renderer.composeCanvases(
+						composition,
+						previewedStack[i].canvas,
+						x * y
+					);
 					composedPalette = await renderer.composePalettes(
 						composedPalette,
-						palettesEncoded[i],
+						previewedStack[i].palette,
 						colorCount,
-						layers[i].palette.length
+						previewedStack[i].colorCount
 					);
 
 					console.log({ composition, composedPalette });
 
-					colorCount += layers[i].palette.length;
+					colorCount += previewedStack[i].colorCount;
 				}
-				console.log('composed!!');
-
-				return renderer.render(composition, composedPalette, x, y);
+				return renderer.render(composition, composedPalette, x, y, backgroundColor);
 			}
-			console.log({ x, y });
-			return renderer.render(canvasesEncoded[activeCanvas], palettesEncoded[activeCanvas], x, y);
+			return renderer.render(
+				canvasesEncoded[activeCanvas],
+				palettesEncoded[activeCanvas],
+				x,
+				y,
+				backgroundColor
+			);
 		} catch (e) {
 			console.log(e);
 			throw e;

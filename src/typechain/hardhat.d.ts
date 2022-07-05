@@ -13,28 +13,64 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "ComposerTest",
+      name: "Array",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ComposerTest__factory>;
+    ): Promise<Contracts.Array__factory>;
+    getContractFactory(
+      name: "Encoder",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Encoder__factory>;
     getContractFactory(
       name: "IRenderer",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IRenderer__factory>;
+    getContractFactory(
+      name: "Moonbirds",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Moonbirds__factory>;
+    getContractFactory(
+      name: "OnChainPixelArt",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnChainPixelArt__factory>;
+    getContractFactory(
+      name: "OnChainPixelArtLibrary",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnChainPixelArtLibrary__factory>;
     getContractFactory(
       name: "Renderer",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Renderer__factory>;
 
     getContractAt(
-      name: "ComposerTest",
+      name: "Array",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ComposerTest>;
+    ): Promise<Contracts.Array>;
+    getContractAt(
+      name: "Encoder",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Encoder>;
     getContractAt(
       name: "IRenderer",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IRenderer>;
+    getContractAt(
+      name: "Moonbirds",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Moonbirds>;
+    getContractAt(
+      name: "OnChainPixelArt",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnChainPixelArt>;
+    getContractAt(
+      name: "OnChainPixelArtLibrary",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnChainPixelArtLibrary>;
     getContractAt(
       name: "Renderer",
       address: string,

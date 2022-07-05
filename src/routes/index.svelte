@@ -81,7 +81,16 @@
 		</div>
 		<div class="canvas">
 			{#if onChainRenderingEnabled}
-				<OnChainRenderer {renderer} {layers} compression={4} {x} {y} {activeCanvas} {previewed} />
+				<OnChainRenderer
+					{renderer}
+					{layers}
+					compression={4}
+					{x}
+					{y}
+					{activeCanvas}
+					{previewed}
+					{backgroundColor}
+				/>
 			{:else}
 				<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
 				<Canvas
