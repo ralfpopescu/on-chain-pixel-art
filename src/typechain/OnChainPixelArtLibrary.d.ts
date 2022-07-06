@@ -25,7 +25,7 @@ interface OnChainPixelArtLibraryInterface extends ethers.utils.Interface {
     "composePalettes(uint256[],uint256[],uint256,uint256)": FunctionFragment;
     "encodeColorArray(uint256[],uint256,uint256)": FunctionFragment;
     "getColorCount(uint256[])": FunctionFragment;
-    "render(uint256[],uint256[],uint256,uint256,uint256)": FunctionFragment;
+    "render(uint256[],uint256[],uint256,uint256,string)": FunctionFragment;
     "toHexString(uint256)": FunctionFragment;
     "toString(uint256)": FunctionFragment;
     "uri(string)": FunctionFragment;
@@ -54,13 +54,7 @@ interface OnChainPixelArtLibraryInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "render",
-    values: [
-      BigNumberish[],
-      BigNumberish[],
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+    values: [BigNumberish[], BigNumberish[], BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
     functionFragment: "toHexString",
@@ -183,7 +177,7 @@ export class OnChainPixelArtLibrary extends BaseContract {
       palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
-      backgroundColor: BigNumberish,
+      svgExtension: string,
       overrides?: CallOverrides
     ): Promise<[string] & { svg: string }>;
 
@@ -239,7 +233,7 @@ export class OnChainPixelArtLibrary extends BaseContract {
     palette: BigNumberish[],
     xDim: BigNumberish,
     yDim: BigNumberish,
-    backgroundColor: BigNumberish,
+    svgExtension: string,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -286,7 +280,7 @@ export class OnChainPixelArtLibrary extends BaseContract {
       palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
-      backgroundColor: BigNumberish,
+      svgExtension: string,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -342,7 +336,7 @@ export class OnChainPixelArtLibrary extends BaseContract {
       palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
-      backgroundColor: BigNumberish,
+      svgExtension: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -399,7 +393,7 @@ export class OnChainPixelArtLibrary extends BaseContract {
       palette: BigNumberish[],
       xDim: BigNumberish,
       yDim: BigNumberish,
-      backgroundColor: BigNumberish,
+      svgExtension: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

@@ -11,9 +11,9 @@
 	>
 	<span class="i1">* Dimensions must match what the canvas was encoded with.</span>
 	<span class="i1"
-		>* The svg extension is a string that will be inserted into the {'<svg> '}tag. Use this for
-		backgrounds, transforms, etc.</span
-	>
+		>* The svg extension is a string that will be inserted into the {'<svg> '}tag.
+	</span>
+	<span class="i1">Use this for backgrounds, transforms, etc.</span>
 	<span class="i1">*/</span>
 	<span class="i1">function render(</span>
 	<span class="i2">uint256[] memory canvas,</span>

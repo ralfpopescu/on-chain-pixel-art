@@ -18,7 +18,7 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface OnChainPixelArtInterface extends ethers.utils.Interface {
+interface IOnChainPixelArtInterface extends ethers.utils.Interface {
   functions: {
     "base64Encode(bytes)": FunctionFragment;
     "composeLayers(uint256[],uint256[],uint256)": FunctionFragment;
@@ -99,7 +99,7 @@ interface OnChainPixelArtInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class OnChainPixelArt extends BaseContract {
+export class IOnChainPixelArt extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -140,7 +140,7 @@ export class OnChainPixelArt extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: OnChainPixelArtInterface;
+  interface: IOnChainPixelArtInterface;
 
   functions: {
     base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<[string]>;
@@ -168,7 +168,7 @@ export class OnChainPixelArt extends BaseContract {
     ): Promise<[BigNumber[]] & { encoded: BigNumber[] }>;
 
     getColorCount(
-      layers: BigNumberish[],
+      layer: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { colorCount: BigNumber }>;
 
@@ -188,15 +188,9 @@ export class OnChainPixelArt extends BaseContract {
 
     toString(value: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    uri(
-      data: string,
-      overrides?: CallOverrides
-    ): Promise<[string] & { encoded: string }>;
+    uri(data: string, overrides?: CallOverrides): Promise<[string]>;
 
-    uriSvg(
-      data: string,
-      overrides?: CallOverrides
-    ): Promise<[string] & { encoded: string }>;
+    uriSvg(data: string, overrides?: CallOverrides): Promise<[string]>;
   };
 
   base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<string>;
@@ -224,7 +218,7 @@ export class OnChainPixelArt extends BaseContract {
   ): Promise<BigNumber[]>;
 
   getColorCount(
-    layers: BigNumberish[],
+    layer: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -271,7 +265,7 @@ export class OnChainPixelArt extends BaseContract {
     ): Promise<BigNumber[]>;
 
     getColorCount(
-      layers: BigNumberish[],
+      layer: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -327,7 +321,7 @@ export class OnChainPixelArt extends BaseContract {
     ): Promise<BigNumber>;
 
     getColorCount(
-      layers: BigNumberish[],
+      layer: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -384,7 +378,7 @@ export class OnChainPixelArt extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getColorCount(
-      layers: BigNumberish[],
+      layer: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

@@ -1,19 +1,28 @@
 import type { Web3Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 import { abi } from './abi';
-import { BigNumber } from 'ethers';
 
-const RENDERER_CONTRACT_ADDRESS = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9';
+const RENDERER_CONTRACT_ADDRESS = '0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E';
 
 const getContract = (lib: Web3Provider) => new ethers.Contract(RENDERER_CONTRACT_ADDRESS, abi, lib);
 
 export const render =
 	(lib: Web3Provider) =>
-	(canvas: number[], palette: string[], xDim: number, yDim: number, backgroundColor: string) => {
+	async (
+		canvas: number[],
+		palette: string[],
+		xDim: number,
+		yDim: number,
+		backgroundColor: string
+	) => {
 		const contract = getContract(lib);
 		const signer = lib.getSigner();
-		const adjustedBg = BigNumber.from(backgroundColor.replace('#', '0x')).shl(4).add(1);
-		return contract.connect(signer).render(canvas, palette, xDim, yDim, adjustedBg);
+		console.log({ backgroundColor });
+		const result = await contract
+			.connect(signer)
+			.render(canvas, palette, xDim, yDim, `style="background-color: ${backgroundColor}"`);
+		console.log(result);
+		return result;
 	};
 
 export const encodeCanvas =

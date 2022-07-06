@@ -25,6 +25,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IRenderer__factory>;
     getContractFactory(
+      name: "IRenderer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IRenderer__factory>;
+    getContractFactory(
       name: "Moonbirds",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Moonbirds__factory>;
@@ -51,6 +55,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Encoder>;
+    getContractAt(
+      name: "IRenderer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IRenderer>;
     getContractAt(
       name: "IRenderer",
       address: string,
