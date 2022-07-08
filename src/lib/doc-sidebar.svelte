@@ -10,7 +10,7 @@
 	export let y;
 </script>
 
-<div class="container bg-dark">
+<div class="container bg-dark p-4">
 	{#if activeDocIndex == 0}
 		<DocDocumentation />
 	{:else if activeDocIndex == 1}

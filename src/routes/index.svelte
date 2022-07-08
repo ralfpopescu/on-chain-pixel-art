@@ -5,16 +5,13 @@
 	import DimensionControls from '$lib/dimension-controls.svelte';
 	import CanvasControls from '$lib/canvas-controls.svelte';
 	import BackgroundControl from '$lib/background-control.svelte';
-	import CodeControls from '$lib/code-controls.svelte';
 	import OnChainControl from '$lib/on-chain-control.svelte';
 	import OnChainRenderer from '$lib/on-chain-renderer.svelte';
 	import DocSidebar from '$lib/doc-sidebar.svelte';
-	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
 	import Optimizer from '$lib/optimizer.svelte';
 	import type { AppState, Layer } from '$lib/types';
-	import type { Renderer } from '../util/contract';
 	import { getRenderer } from '../util/contract';
 	import Undo from '$lib/graphics/undo.svelte';
 	import Redo from '$lib/graphics/redo.svelte';
