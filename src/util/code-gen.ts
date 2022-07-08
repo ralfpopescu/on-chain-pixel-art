@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import type { Layer } from '$lib/types';
 
 export const getColorCompression = (numberOfColors: number) => {
 	let c = 0;
@@ -189,7 +190,25 @@ const createMetadata = (canvas: number[], pixelCompression: number, colorCount: 
 		.and('0xFFFFFFF');
 };
 
-export const encodeCanvas = (canvas: number[], pixelCompression: number, colorCount: number) => {
+const getOptimalCompression = (layer: Layer) => {
+	const compressions = [1, 2, 3, 4, 5, 6, 7, 8];
+
+	const results = compressions.map((compression) => {
+		const { canvas, palette } = layer;
+		const colorCompression = getColorCompression(palette.length);
+		const compressed = compressColors(compression, canvas);
+		const binary = packetsToBinary(compressed, compression, colorCompression);
+		const uints = binaryToUint256(binary, compression, colorCompression);
+		return { binary, colorCompression, compression, packetCount: compressed.length, uints };
+	});
+
+	return results.sort((a, b) => a.packetCount - b.packetCount)[0].compression;
+};
+
+export const encodeCanvas = (layer: Layer) => {
+	const { canvas } = layer;
+	const colorCount = layer.palette.length;
+	const pixelCompression = getOptimalCompression(layer);
 	const metadata = createMetadata(canvas, pixelCompression, colorCount);
 	const colorCompression = getColorCompression(colorCount);
 	const compressed = compressColors(pixelCompression, canvas);

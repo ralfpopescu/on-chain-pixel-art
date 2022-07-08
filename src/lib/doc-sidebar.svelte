@@ -1,22 +1,22 @@
 <script lang="ts">
-	import CodeGen from './code-gen.svelte';
-	import CodeInterface from './code-gen-interface.svelte';
-	import CodeNFT from './code-gen-erc721.svelte';
+	import DocCode from './doc-code.svelte';
+	import DocDocumentation from './doc-documentation.svelte';
+	import DocSource from './doc-source.svelte';
 	import CodeBackup from './code-backup.svelte';
 	import type { Layer } from './types';
 	export let layers: Layer[];
-	export let activeCodeIndex = 0;
+	export let activeDocIndex = 0;
 	export let x;
 	export let y;
 </script>
 
 <div class="container bg-dark">
-	{#if activeCodeIndex == 0}
-		<CodeGen {x} {y} {layers} />
-	{:else if activeCodeIndex == 1}
-		<CodeInterface />
-	{:else if activeCodeIndex == 2}
-		<CodeNFT />
+	{#if activeDocIndex == 0}
+		<DocDocumentation />
+	{:else if activeDocIndex == 1}
+		<DocCode {x} {y} {layers} />
+	{:else if activeDocIndex == 2}
+		<DocSource />
 	{:else}
 		<CodeBackup {x} {y} {layers} />
 	{/if}

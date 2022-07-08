@@ -3,14 +3,10 @@
 	import { encodeCanvas, encodePalette } from '../util/code-gen';
 
 	export let layers: Layer[];
-	export let layerCount: number;
-	export let compression: number;
 	export let x: number;
 	export let y: number;
 
-	$: canvasesEncoded = layers
-		.sort((a, b) => a.name.localeCompare(b.name))
-		.map(({ canvas, palette }) => encodeCanvas(canvas, compression, palette.length));
+	$: canvasesEncoded = layers.sort((a, b) => a.name.localeCompare(b.name)).map(encodeCanvas);
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 </script>
 
@@ -27,11 +23,11 @@
 	<span class="i1"><span class="d">IRenderer</span> <span class="b">private</span> renderer;</span>
 	<br />
 	<span class="i1"
-		><span class="a">uint256</span>[][<span class="d">{layerCount}</span>]
+		><span class="a">uint256</span>[][<span class="d">{layers.length}</span>]
 		<span class="b">private</span> assets;</span
 	>
 	<span class="i1"
-		><span class="a">uint256</span>[][<span class="d">{layerCount}</span>]
+		><span class="a">uint256</span>[][<span class="d">{layers.length}</span>]
 		<span class="b">private</span> palettes;</span
 	>
 	<span class="i1"
@@ -152,10 +148,18 @@
 	}
 
 	.i3 {
-		padding-left: 64px;
+		padding-left: 48px;
 	}
 
 	.i4 {
-		padding-left: 128px;
+		padding-left: 64px;
+	}
+
+	.i5 {
+		padding-left: 80px;
+	}
+
+	.i6 {
+		padding-left: 96px;
 	}
 </style>

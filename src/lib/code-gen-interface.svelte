@@ -198,10 +198,18 @@
 	}
 
 	.i3 {
-		padding-left: 64px;
+		padding-left: 48px;
 	}
 
 	.i4 {
-		padding-left: 128px;
+		padding-left: 64px;
+	}
+
+	.i5 {
+		padding-left: 80px;
+	}
+
+	.i6 {
+		padding-left: 96px;
 	}
 </style>

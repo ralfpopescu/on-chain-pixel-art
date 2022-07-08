@@ -7,7 +7,6 @@
 
 	export let renderer: Renderer;
 	export let layers: Layer[];
-	export let compression: number;
 	export let backgroundColor: string;
 	export let x: number;
 	export let y: number;
@@ -15,9 +14,7 @@
 	export let previewed: number[];
 	export let activeCanvas: number;
 
-	$: canvasesEncoded = layers.map(({ canvas, palette }) =>
-		encodeCanvas(canvas, compression, palette.length)
-	);
+	$: canvasesEncoded = layers.map(encodeCanvas);
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 
 	$: console.log({

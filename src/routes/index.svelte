@@ -8,6 +8,7 @@
 	import CodeControls from '$lib/code-controls.svelte';
 	import OnChainControl from '$lib/on-chain-control.svelte';
 	import OnChainRenderer from '$lib/on-chain-renderer.svelte';
+	import DocSidebar from '$lib/doc-sidebar.svelte';
 	import Code from '$lib/code.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Tabs from '$lib/tabs.svelte';
@@ -17,6 +18,7 @@
 	import { getRenderer } from '../util/contract';
 	import Undo from '$lib/graphics/undo.svelte';
 	import Redo from '$lib/graphics/redo.svelte';
+	import DocControls from '$lib/doc-controls.svelte';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -56,7 +58,7 @@
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
-	let activeCodeIndex = 0;
+	let activeDocIndex = 0;
 
 	let previewed: number[] = [];
 
@@ -81,16 +83,7 @@
 		</div>
 		<div class="canvas">
 			{#if onChainRenderingEnabled}
-				<OnChainRenderer
-					{renderer}
-					{layers}
-					compression={4}
-					{x}
-					{y}
-					{activeCanvas}
-					{previewed}
-					{backgroundColor}
-				/>
+				<OnChainRenderer {renderer} {layers} {x} {y} {activeCanvas} {previewed} {backgroundColor} />
 			{:else}
 				<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
 				<Canvas
@@ -136,13 +129,13 @@
 			</div>
 		</div>
 		<div class="code">
-			<Code {layers} {activeCodeIndex} {x} {y} />
+			<DocSidebar {layers} {activeDocIndex} {x} {y} />
 		</div>
 		<div class="logo">
 			<Logo />
 		</div>
 		<div class="code-header">
-			<CodeControls bind:activeCodeIndex />
+			<DocControls bind:activeDocIndex />
 		</div>
 	</div>
 </div>
