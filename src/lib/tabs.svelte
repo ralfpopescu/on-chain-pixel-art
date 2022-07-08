@@ -13,9 +13,9 @@
 	});
 </script>
 
-<div class="bg-dark flex h-full container" style={`table-layout:fixed;`} bind:clientWidth={w}>
+<div class="bg-dark flex h-full container" bind:clientWidth={w}>
 	{#if w}
-		<div class="tabContainer" style={`max-width: ${maxWidth - 20}px`}>
+		<div class="tabContainer" style={`max-width: ${maxWidth - 120}px`}>
 			{#each layers as _, i}
 				<div
 					class={`px-8 h-full tab ${

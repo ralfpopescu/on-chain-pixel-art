@@ -162,6 +162,7 @@
 
 	.code {
 		grid-area: code;
+		max-width: 500px;
 	}
 
 	.tabs {
