@@ -1,4 +1,9 @@
 <div class="flex flex-col gap-2">
+	<span class="c text-xs bg-dark2 bg-opacity-50 p-4"
+		>Getting value from OnChainPixelArt? Consider donating to
+		0xC39043082AdF6D2Ec27F79075C77Fb80A9C03eB0 to support.</span
+	>
+	<br />
 	<span class="a"> OnChainPixelArt Documentation</span>
 	<br />
 	<span
@@ -7,7 +12,7 @@
 	</span>
 	<br />
 	<span
-		>On-Chain Pixel Art is not a token, or even a contract you can transact with - it’s an image
+		>OnChainPixelArt is not a token, or even a contract you can transact with - it’s an image
 		encoding which can render light-weight integers into pixel art.
 	</span>
 	<br />

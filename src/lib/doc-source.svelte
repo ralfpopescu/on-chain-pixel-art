@@ -15,15 +15,29 @@
 	<br />
 	<div class="a">Source Code</div>
 	<div class="flex flex-col gap-1">
-		<span class="c">Library:</span>
-		<a href=">https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
-			>Etherscan</a
-		>
-		<span class="c">Contract:</span>
-		<a href="https://etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code"
-			>Etherscan</a
-		>
-		<span class="c">Client app</span>: Github
+		<div>
+			<span class="c">Library:</span>
+			<a
+				class="b"
+				href=">https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
+				>etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code</a
+			>
+		</div>
+		<div>
+			<span class="c">Contract:</span>
+			<a
+				class="b"
+				href="https://etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code"
+				>etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code</a
+			>
+		</div>
+	</div>
+	<br />
+	<div class="a">Contact</div>
+	<div class="flex flex-row gap-1">
+		<div class="c">twitter:</div>
+		<a href="https://twitter.com/popeska" class="b">@popeska</a> ||
+		<a href="https://twitter.com/mineable_nft" class="b">@mineable_nft</a>
 	</div>
 </div>
 

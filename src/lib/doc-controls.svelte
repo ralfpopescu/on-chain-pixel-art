@@ -1,7 +1,7 @@
 <script>
 	export let activeDocIndex = 0;
 
-	const options = ['Docs', 'Code-Gen', 'Source & Addresses', 'Project Backup'];
+	const options = ['Docs', 'Code-Gen', 'Source, Addresses, & Contact', 'Project Backup'];
 </script>
 
 <div class="flex flex-row align-center justify-center items-center h-full">

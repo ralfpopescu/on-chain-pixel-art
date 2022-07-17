@@ -16,6 +16,7 @@
 	import Undo from '$lib/graphics/undo.svelte';
 	import Redo from '$lib/graphics/redo.svelte';
 	import DocControls from '$lib/doc-controls.svelte';
+	import MediaQuery from '$lib/media-query.svelte';
 
 	const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
 
@@ -72,70 +73,92 @@
 	$: selectedPaletteIndex = 1;
 </script>
 
-<div class="h-screen w-screen flex font-press-start">
-	<div class="app bg-dark2 text-silver text-xs w-full">
-		<div class="tabs">
-			<OnChainControl bind:web3 bind:onChainRenderingEnabled />
-			<Tabs bind:layers bind:activeCanvas bind:previewed />
+<MediaQuery query="(max-width: 900px)" let:matches>
+	{#if matches}
+		<div class="h-screen w-screen flex font-press-start bg-dark2 text-silver">
+			<div class="flex flex-col">
+				<div class="text-xs p-4">
+					The OnChainPixelArt app is only available on desktop. In the meantime, enjoy the docs on
+					your little screen!
+				</div>
+				<DocSidebar {layers} {activeDocIndex} {x} {y} />
+			</div>
 		</div>
-		<div class="canvas">
-			{#if onChainRenderingEnabled}
-				<OnChainRenderer {renderer} {layers} {x} {y} {activeCanvas} {previewed} {backgroundColor} />
-			{:else}
-				<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
-				<Canvas
-					xDim={x}
-					yDim={y}
-					bind:layers
-					{activeCanvas}
-					{selectedPaletteIndex}
-					bind:previewed
-					bind:undoStack
-					{backgroundColor}
-				/>
-				<Optimizer {layers} {activeCanvas} />
-			{/if}
-		</div>
-		<div class="sidebar">
-			<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
-				<BackgroundControl bind:backgroundColor />
-				<DimensionControls bind:x bind:y bind:layers />
-				<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
-				<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">
-					<button
-						disabled={undoStack.length == 0}
-						style={undoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
-						on:click={() => {
-							const redo = [...layers];
-							layers = [...undoStack[undoStack.length - 1]];
-							undoStack.pop();
-							redoStack = [...redoStack, redo];
-						}}><Undo /> undo</button
-					>
-					<button
-						on:click={() => {
-							layers = [...redoStack[redoStack.length - 1]];
-							redoStack.pop();
-							redoStack = [...redoStack];
-						}}
-						disabled={redoStack.length == 0}
-						style={redoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
-						><Redo /> redo</button
-					>
+	{:else}
+		<div class="h-screen w-screen flex font-press-start">
+			<div class="app bg-dark2 text-silver text-xs w-full">
+				<div class="tabs">
+					<OnChainControl bind:web3 bind:onChainRenderingEnabled />
+					<Tabs bind:layers bind:activeCanvas bind:previewed />
+				</div>
+				<div class="canvas">
+					{#if onChainRenderingEnabled}
+						<OnChainRenderer
+							{renderer}
+							{layers}
+							{x}
+							{y}
+							{activeCanvas}
+							{previewed}
+							{backgroundColor}
+						/>
+					{:else}
+						<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
+						<Canvas
+							xDim={x}
+							yDim={y}
+							bind:layers
+							{activeCanvas}
+							{selectedPaletteIndex}
+							bind:previewed
+							bind:undoStack
+							{backgroundColor}
+						/>
+						<Optimizer {layers} {activeCanvas} />
+					{/if}
+				</div>
+				<div class="sidebar">
+					<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
+						<BackgroundControl bind:backgroundColor />
+						<DimensionControls bind:x bind:y bind:layers />
+						<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
+						<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">
+							<button
+								disabled={undoStack.length == 0}
+								style={undoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
+								on:click={() => {
+									const redo = [...layers];
+									layers = [...undoStack[undoStack.length - 1]];
+									undoStack.pop();
+									redoStack = [...redoStack, redo];
+								}}><Undo /> undo</button
+							>
+							<button
+								on:click={() => {
+									layers = [...redoStack[redoStack.length - 1]];
+									redoStack.pop();
+									redoStack = [...redoStack];
+								}}
+								disabled={redoStack.length == 0}
+								style={redoStack.length == 0 ? 'opacity: 0.3; cursor: not-allowed;' : ''}
+								><Redo /> redo</button
+							>
+						</div>
+					</div>
+				</div>
+				<div class="code">
+					<DocSidebar {layers} {activeDocIndex} {x} {y} />
+				</div>
+				<div class="logo">
+					<Logo />
+				</div>
+				<div class="code-header">
+					<DocControls bind:activeDocIndex />
 				</div>
 			</div>
 		</div>
-		<div class="code">
-			<DocSidebar {layers} {activeDocIndex} {x} {y} />
-		</div>
-		<div class="logo">
-			<Logo />
-		</div>
-		<div class="code-header">
-			<DocControls bind:activeDocIndex />
-		</div>
-	</div>
-</div>
+	{/if}
+</MediaQuery>
 
 <style>
 	.app {
