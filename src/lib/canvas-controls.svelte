@@ -11,10 +11,11 @@
 	$: name = layers[activeCanvas].name;
 </script>
 
-<div class="flex flex-row w-full px-8 py-4 bg-light/20">
+<div class="center w-full px-8 py-4 bg-light/20">
 	<div class="text-lg flex gap-4 grow">
 		{#if editMode}
 			<input
+				autofocus={true}
 				bind:value={editName}
 				on:blur={() => {
 					layers[activeCanvas].name = editName;
@@ -32,7 +33,14 @@
 				{name}
 			</div>
 		{/if}
-		<Edit />
+		<div
+			on:click={() => {
+				editMode = true;
+				editName = name;
+			}}
+		>
+			<Edit />
+		</div>
 	</div>
 	<button
 		class="flex flex-row justify-center items-center gap-4 text-xs"
@@ -44,4 +52,11 @@
 	>
 </div>
 
-<style></style>
+<style>
+	.center {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

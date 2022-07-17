@@ -2,7 +2,7 @@ import type { Web3Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 import { abi } from './abi';
 
-const RENDERER_CONTRACT_ADDRESS = '0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E';
+const RENDERER_CONTRACT_ADDRESS = '0xC3D6707E421d86E595c01247147320e49887D0ef';
 
 const getContract = (lib: Web3Provider) => new ethers.Contract(RENDERER_CONTRACT_ADDRESS, abi, lib);
 
@@ -17,6 +17,8 @@ export const render =
 	) => {
 		const contract = getContract(lib);
 		const signer = lib.getSigner();
+		const code = await lib.getCode(RENDERER_CONTRACT_ADDRESS);
+		console.log({ code });
 		console.log({ backgroundColor });
 		const result = await contract
 			.connect(signer)
