@@ -28,8 +28,6 @@
 	.container {
 		color: white;
 		opacity: 0.95;
-		overflow: auto;
-		height: 800px;
 		display: flex;
 		flex-direction: column;
 	}
