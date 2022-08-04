@@ -19,8 +19,8 @@
 			<span class="c">Library:</span>
 			<a
 				class="b"
-				href=">https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
-				>etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code</a
+				href="https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
+				target="_blank">etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code</a
 			>
 		</div>
 		<div>
@@ -28,7 +28,7 @@
 			<a
 				class="b"
 				href="https://etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code"
-				>etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code</a
+				target="_blank">etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code</a
 			>
 		</div>
 	</div>
@@ -36,8 +36,8 @@
 	<div class="a">Contact</div>
 	<div class="flex flex-row gap-1">
 		<div class="c">twitter:</div>
-		<a href="https://twitter.com/popeska" class="b">@popeska</a> ||
-		<a href="https://twitter.com/mineable_nft" class="b">@mineable_nft</a>
+		<a href="https://twitter.com/popeska" target="_blank" class="b">@popeska</a> ||
+		<a href="https://twitter.com/mineable_nft" target="_blank" class="b">@mineable_nft</a>
 	</div>
 </div>
 
