@@ -53,6 +53,7 @@
 	let y = appState.y;
 	let layers = appState.layers;
 	let backgroundColor = appState.backgroundColor;
+	let backgroundColorActive = false;
 
 	let activeCanvas: number = 0;
 	let selectedPaletteIndex = 1;
@@ -101,6 +102,7 @@
 							{activeCanvas}
 							{previewed}
 							{backgroundColor}
+							{backgroundColorActive}
 						/>
 					{:else}
 						<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />
@@ -119,7 +121,7 @@
 				</div>
 				<div class="sidebar">
 					<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
-						<BackgroundControl bind:backgroundColor />
+						<BackgroundControl bind:backgroundColor bind:backgroundColorActive />
 						<DimensionControls bind:x bind:y bind:layers />
 						<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
 						<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">

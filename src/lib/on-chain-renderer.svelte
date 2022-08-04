@@ -8,6 +8,7 @@
 	export let renderer: Renderer;
 	export let layers: Layer[];
 	export let backgroundColor: string;
+	export let backgroundColorActive: boolean;
 	export let x: number;
 	export let y: number;
 
@@ -17,16 +18,10 @@
 	$: canvasesEncoded = layers.map(encodeCanvas);
 	$: palettesEncoded = layers.map(({ palette }) => encodePalette(palette));
 
-	$: console.log({
-		canvas: canvasesEncoded ? canvasesEncoded[0] : null,
-		palette: palettesEncoded ? palettesEncoded[0] : null
-	});
-
 	let fetchSrc;
 
 	const getSrc = async () => {
 		try {
-			console.log({ previewed });
 			if (previewed.length > 0) {
 				const previewedStack = previewed.map((index) => ({
 					canvas: canvasesEncoded[index],
@@ -38,10 +33,7 @@
 				let composedPalette = palettesEncoded[activeCanvas];
 				let colorCount = layers[activeCanvas].palette.length;
 
-				console.log('about to loop');
 				for (let i = 0; i < previewedStack.length; i += 1) {
-					console.log('LOOOOP');
-					console.log({ previewed, i });
 					composition = await renderer.composeCanvases(
 						composition,
 						previewedStack[i].canvas,
@@ -54,18 +46,22 @@
 						previewedStack[i].colorCount
 					);
 
-					console.log({ composition, composedPalette });
-
 					colorCount += previewedStack[i].colorCount;
 				}
-				return renderer.render(composition, composedPalette, x, y, backgroundColor);
+				return renderer.render(
+					composition,
+					composedPalette,
+					x,
+					y,
+					backgroundColorActive ? backgroundColor : ''
+				);
 			}
 			return renderer.render(
 				canvasesEncoded[activeCanvas],
 				palettesEncoded[activeCanvas],
 				x,
 				y,
-				backgroundColor
+				backgroundColorActive ? backgroundColor : ''
 			);
 		} catch (e) {
 			console.log(e);
@@ -74,7 +70,13 @@
 	};
 	// force a rerender by checking
 	$: fetchSrc =
-		!!canvasesEncoded && !!palettesEncoded && activeCanvas > -1 && previewed ? getSrc() : null;
+		!!canvasesEncoded &&
+		!!palettesEncoded &&
+		activeCanvas > -1 &&
+		previewed &&
+		backgroundColorActive != null
+			? getSrc()
+			: null;
 </script>
 
 {#await fetchSrc}
