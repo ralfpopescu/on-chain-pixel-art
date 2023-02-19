@@ -106,6 +106,8 @@
 							{previewed}
 							{backgroundColor}
 							{backgroundColorActive}
+							{paddingX}
+							{paddingY}
 						/>
 					{:else}
 						<CanvasControls bind:layers bind:activeCanvas bind:selectedPaletteIndex />

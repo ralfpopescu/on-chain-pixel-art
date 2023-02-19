@@ -11,6 +11,8 @@
 	export let backgroundColorActive: boolean;
 	export let x: number;
 	export let y: number;
+	export let paddingX: number;
+	export let paddingY: number;
 
 	export let previewed: number[];
 	export let activeCanvas: number;
@@ -53,7 +55,9 @@
 					composedPalette,
 					x,
 					y,
-					backgroundColorActive ? backgroundColor : ''
+					backgroundColorActive ? backgroundColor : '',
+					paddingX,
+					paddingY
 				);
 			}
 			return renderer.render(
@@ -61,7 +65,9 @@
 				palettesEncoded[activeCanvas],
 				x,
 				y,
-				backgroundColorActive ? backgroundColor : ''
+				backgroundColorActive ? backgroundColor : '',
+				paddingX,
+				paddingY
 			);
 		} catch (e) {
 			console.log(e);
