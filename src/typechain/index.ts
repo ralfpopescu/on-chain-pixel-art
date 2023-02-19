@@ -3,16 +3,22 @@
 /* eslint-disable */
 export type { Array } from "./Array";
 export type { Encoder } from "./Encoder";
-export type { IRenderer } from "./IRenderer";
+export type { IOnChainPixelArt } from "./IOnChainPixelArt";
+export type { IOnChainPixelArtv2 } from "./IOnChainPixelArtv2";
 export type { Moonbirds } from "./Moonbirds";
 export type { OnChainPixelArt } from "./OnChainPixelArt";
 export type { OnChainPixelArtLibrary } from "./OnChainPixelArtLibrary";
+export type { OnChainPixelArtLibraryv2 } from "./OnChainPixelArtLibraryv2";
+export type { OnChainPixelArtv2 } from "./OnChainPixelArtv2";
 export type { Renderer } from "./Renderer";
 
 export { Array__factory } from "./factories/Array__factory";
 export { Encoder__factory } from "./factories/Encoder__factory";
-export { IRenderer__factory } from "./factories/IRenderer__factory";
+export { IOnChainPixelArt__factory } from "./factories/IOnChainPixelArt__factory";
+export { IOnChainPixelArtv2__factory } from "./factories/IOnChainPixelArtv2__factory";
 export { Moonbirds__factory } from "./factories/Moonbirds__factory";
 export { OnChainPixelArt__factory } from "./factories/OnChainPixelArt__factory";
 export { OnChainPixelArtLibrary__factory } from "./factories/OnChainPixelArtLibrary__factory";
+export { OnChainPixelArtLibraryv2__factory } from "./factories/OnChainPixelArtLibraryv2__factory";
+export { OnChainPixelArtv2__factory } from "./factories/OnChainPixelArtv2__factory";
 export { Renderer__factory } from "./factories/Renderer__factory";

@@ -18,14 +18,14 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface IOnChainPixelArtInterface extends ethers.utils.Interface {
+interface OnChainPixelArtv2Interface extends ethers.utils.Interface {
   functions: {
     "base64Encode(bytes)": FunctionFragment;
     "composeLayers(uint256[],uint256[],uint256)": FunctionFragment;
     "composePalettes(uint256[],uint256[],uint256,uint256)": FunctionFragment;
     "encodeColorArray(uint256[],uint256,uint256)": FunctionFragment;
     "getColorCount(uint256[])": FunctionFragment;
-    "render(uint256[],uint256[],uint256,uint256,string,uint256)": FunctionFragment;
+    "render(uint256[],uint256[],uint256,uint256,string,uint256,uint256)": FunctionFragment;
     "toHexString(uint256)": FunctionFragment;
     "toString(uint256)": FunctionFragment;
     "uri(string)": FunctionFragment;
@@ -60,6 +60,7 @@ interface IOnChainPixelArtInterface extends ethers.utils.Interface {
       BigNumberish,
       BigNumberish,
       string,
+      BigNumberish,
       BigNumberish
     ]
   ): string;
@@ -106,7 +107,7 @@ interface IOnChainPixelArtInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class IOnChainPixelArt extends BaseContract {
+export class OnChainPixelArtv2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -147,7 +148,7 @@ export class IOnChainPixelArt extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: IOnChainPixelArtInterface;
+  interface: OnChainPixelArtv2Interface;
 
   functions: {
     base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<[string]>;
@@ -175,7 +176,7 @@ export class IOnChainPixelArt extends BaseContract {
     ): Promise<[BigNumber[]] & { encoded: BigNumber[] }>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { colorCount: BigNumber }>;
 
@@ -185,7 +186,8 @@ export class IOnChainPixelArt extends BaseContract {
       xDim: BigNumberish,
       yDim: BigNumberish,
       svgExtension: string,
-      padding: BigNumberish,
+      paddingX: BigNumberish,
+      paddingY: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string] & { svg: string }>;
 
@@ -196,9 +198,15 @@ export class IOnChainPixelArt extends BaseContract {
 
     toString(value: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    uri(data: string, overrides?: CallOverrides): Promise<[string]>;
+    uri(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
 
-    uriSvg(data: string, overrides?: CallOverrides): Promise<[string]>;
+    uriSvg(
+      data: string,
+      overrides?: CallOverrides
+    ): Promise<[string] & { encoded: string }>;
   };
 
   base64Encode(data: BytesLike, overrides?: CallOverrides): Promise<string>;
@@ -226,7 +234,7 @@ export class IOnChainPixelArt extends BaseContract {
   ): Promise<BigNumber[]>;
 
   getColorCount(
-    layer: BigNumberish[],
+    layers: BigNumberish[],
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -236,7 +244,8 @@ export class IOnChainPixelArt extends BaseContract {
     xDim: BigNumberish,
     yDim: BigNumberish,
     svgExtension: string,
-    padding: BigNumberish,
+    paddingX: BigNumberish,
+    paddingY: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
 
@@ -274,7 +283,7 @@ export class IOnChainPixelArt extends BaseContract {
     ): Promise<BigNumber[]>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -284,7 +293,8 @@ export class IOnChainPixelArt extends BaseContract {
       xDim: BigNumberish,
       yDim: BigNumberish,
       svgExtension: string,
-      padding: BigNumberish,
+      paddingX: BigNumberish,
+      paddingY: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -331,7 +341,7 @@ export class IOnChainPixelArt extends BaseContract {
     ): Promise<BigNumber>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -341,7 +351,8 @@ export class IOnChainPixelArt extends BaseContract {
       xDim: BigNumberish,
       yDim: BigNumberish,
       svgExtension: string,
-      padding: BigNumberish,
+      paddingX: BigNumberish,
+      paddingY: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -389,7 +400,7 @@ export class IOnChainPixelArt extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getColorCount(
-      layer: BigNumberish[],
+      layers: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -399,7 +410,8 @@ export class IOnChainPixelArt extends BaseContract {
       xDim: BigNumberish,
       yDim: BigNumberish,
       svgExtension: string,
-      padding: BigNumberish,
+      paddingX: BigNumberish,
+      paddingY: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

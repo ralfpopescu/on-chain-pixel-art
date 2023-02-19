@@ -17,19 +17,41 @@
 	<div class="flex flex-col gap-1">
 		<div>
 			<span class="c">Library:</span>
-			<a
-				class="b"
-				href="https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
-				target="_blank">etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code</a
-			>
+			<div class="flex">
+				v1:
+				<a
+					class="b"
+					href="https://etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code"
+					target="_blank">etherscan.io/address/0xD781c3c63023366EAC84121DFb0B122Ad590Db26#code</a
+				>
+			</div>
+			<div class="flex">
+				v2 (current):
+				<a
+					class="b"
+					href="https://etherscan.io/address/0x07f960B774EF51E90E8c0be9eE9f50217efB6Be7#code"
+					target="_blank">etherscan.io/address/0x07f960B774EF51E90E8c0be9eE9f50217efB6Be7#code</a
+				>
+			</div>
 		</div>
 		<div>
 			<span class="c">Contract:</span>
-			<a
-				class="b"
-				href="https://etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code"
-				target="_blank">etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code</a
-			>
+			<div class="flex">
+				v1:
+				<a
+					class="b"
+					href="https://etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code"
+					target="_blank">etherscan.io/address/0xC3D6707E421d86E595c01247147320e49887D0ef#code</a
+				>
+			</div>
+			<div class="flex">
+				v2 (current):
+				<a
+					class="b"
+					href="https://etherscan.io/address/0xfCBaD2f45676397792381612913491321E2aad75#code"
+					target="_blank">etherscan.io/address/0xfCBaD2f45676397792381612913491321E2aad75#code</a
+				>
+			</div>
 		</div>
 	</div>
 	<br />

@@ -155,6 +155,16 @@ export const abi = [
 				internalType: 'string',
 				name: 'svgExtension',
 				type: 'string'
+			},
+			{
+				internalType: 'uint256',
+				name: 'paddingX',
+				type: 'uint256'
+			},
+			{
+				internalType: 'uint256',
+				name: 'paddingY',
+				type: 'uint256'
 			}
 		],
 		name: 'render',
@@ -165,7 +175,7 @@ export const abi = [
 				type: 'string'
 			}
 		],
-		stateMutability: 'view',
+		stateMutability: 'pure',
 		type: 'function'
 	},
 	{

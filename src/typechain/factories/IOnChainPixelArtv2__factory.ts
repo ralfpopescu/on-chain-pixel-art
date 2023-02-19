@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import { Provider } from "@ethersproject/providers";
 import type {
-  IOnChainPixelArt,
-  IOnChainPixelArtInterface,
-} from "../IOnChainPixelArt";
+  IOnChainPixelArtv2,
+  IOnChainPixelArtv2Interface,
+} from "../IOnChainPixelArtv2";
 
 const _abi = [
   {
@@ -169,7 +169,12 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "padding",
+        name: "paddingX",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "paddingY",
         type: "uint256",
       },
     ],
@@ -262,15 +267,15 @@ const _abi = [
   },
 ];
 
-export class IOnChainPixelArt__factory {
+export class IOnChainPixelArtv2__factory {
   static readonly abi = _abi;
-  static createInterface(): IOnChainPixelArtInterface {
-    return new utils.Interface(_abi) as IOnChainPixelArtInterface;
+  static createInterface(): IOnChainPixelArtv2Interface {
+    return new utils.Interface(_abi) as IOnChainPixelArtv2Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IOnChainPixelArt {
-    return new Contract(address, _abi, signerOrProvider) as IOnChainPixelArt;
+  ): IOnChainPixelArtv2 {
+    return new Contract(address, _abi, signerOrProvider) as IOnChainPixelArtv2;
   }
 }

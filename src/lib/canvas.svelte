@@ -6,8 +6,14 @@
 	export let activeCanvas: number;
 	export let previewed: number[];
 	export let backgroundColor: string;
+	export let paddingX: number;
+	export let paddingY: number;
 
 	let canvas: string[];
+
+	$: paddingStyle = `padding-left: ${paddingX * 20}px; padding-right: ${
+		paddingX * 20
+	}px; padding-top: ${paddingY * 20}px; padding-bottom: ${paddingY * 20}px;`;
 
 	$: {
 		if (previewed.length) {
@@ -49,8 +55,8 @@
 <div
 	class="border-8 border-dark"
 	style={`display: grid; grid-template-rows: repeat(${yDim}, 20px); grid-template-columns: repeat(${xDim}, 20px); max-height: ${
-		yDim * 20 + 16
-	}px;`}
+		(yDim + paddingY * 2) * 20 + 16
+	}px; background-color: rgba(255, 255, 255, 0.5); ${paddingStyle}`}
 >
 	{#each canvas as color, i}
 		<Pixel

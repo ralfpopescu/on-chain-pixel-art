@@ -2,7 +2,7 @@ import type { Web3Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 import { abi } from './abi';
 
-const RENDERER_CONTRACT_ADDRESS = '0xC3D6707E421d86E595c01247147320e49887D0ef';
+const RENDERER_CONTRACT_ADDRESS = '0xfCBaD2f45676397792381612913491321E2aad75';
 
 const getContract = (lib: Web3Provider) => new ethers.Contract(RENDERER_CONTRACT_ADDRESS, abi, lib);
 
@@ -13,7 +13,9 @@ export const render =
 		palette: string[],
 		xDim: number,
 		yDim: number,
-		backgroundColor: string
+		backgroundColor: string,
+		paddingX: number,
+		paddingY: number
 	) => {
 		const contract = getContract(lib);
 		const signer = lib.getSigner();
@@ -22,7 +24,15 @@ export const render =
 		console.log({ backgroundColor });
 		const result = await contract
 			.connect(signer)
-			.render(canvas, palette, xDim, yDim, `style="background-color: ${backgroundColor}"`);
+			.render(
+				canvas,
+				palette,
+				xDim,
+				yDim,
+				`style="background-color: ${backgroundColor}"`,
+				paddingX,
+				paddingY
+			);
 		console.log(result);
 		return result;
 	};

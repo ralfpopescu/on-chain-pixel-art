@@ -21,13 +21,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Encoder__factory>;
     getContractFactory(
-      name: "IRenderer",
+      name: "IOnChainPixelArt",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IRenderer__factory>;
+    ): Promise<Contracts.IOnChainPixelArt__factory>;
     getContractFactory(
-      name: "IRenderer",
+      name: "IOnChainPixelArtv2",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IRenderer__factory>;
+    ): Promise<Contracts.IOnChainPixelArtv2__factory>;
     getContractFactory(
       name: "Moonbirds",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -40,6 +40,14 @@ declare module "hardhat/types/runtime" {
       name: "OnChainPixelArtLibrary",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OnChainPixelArtLibrary__factory>;
+    getContractFactory(
+      name: "OnChainPixelArtLibraryv2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnChainPixelArtLibraryv2__factory>;
+    getContractFactory(
+      name: "OnChainPixelArtv2",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OnChainPixelArtv2__factory>;
     getContractFactory(
       name: "Renderer",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -56,15 +64,15 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Encoder>;
     getContractAt(
-      name: "IRenderer",
+      name: "IOnChainPixelArt",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IRenderer>;
+    ): Promise<Contracts.IOnChainPixelArt>;
     getContractAt(
-      name: "IRenderer",
+      name: "IOnChainPixelArtv2",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IRenderer>;
+    ): Promise<Contracts.IOnChainPixelArtv2>;
     getContractAt(
       name: "Moonbirds",
       address: string,
@@ -80,6 +88,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OnChainPixelArtLibrary>;
+    getContractAt(
+      name: "OnChainPixelArtLibraryv2",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnChainPixelArtLibraryv2>;
+    getContractAt(
+      name: "OnChainPixelArtv2",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OnChainPixelArtv2>;
     getContractAt(
       name: "Renderer",
       address: string,

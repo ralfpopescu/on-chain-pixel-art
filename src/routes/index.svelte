@@ -5,6 +5,7 @@
 	import DimensionControls from '$lib/dimension-controls.svelte';
 	import CanvasControls from '$lib/canvas-controls.svelte';
 	import BackgroundControl from '$lib/background-control.svelte';
+	import PaddingControl from '$lib/padding-control.svelte';
 	import OnChainControl from '$lib/on-chain-control.svelte';
 	import OnChainRenderer from '$lib/on-chain-renderer.svelte';
 	import DocSidebar from '$lib/doc-sidebar.svelte';
@@ -41,7 +42,9 @@
 		],
 		x: defaultX,
 		y: defaultY,
-		backgroundColor: defaultBackgroundColor
+		backgroundColor: defaultBackgroundColor,
+		paddingX: 0,
+		paddingY: 0
 	};
 
 	if (typeof localStorage !== 'undefined') {
@@ -49,10 +52,7 @@
 		if (savedData) appState = JSON.parse(savedData);
 	}
 
-	let x = appState.x;
-	let y = appState.y;
-	let layers = appState.layers;
-	let backgroundColor = appState.backgroundColor;
+	let { x, y, paddingX, paddingY, layers, backgroundColor } = appState;
 	let backgroundColorActive = false;
 
 	let activeCanvas: number = 0;
@@ -67,7 +67,10 @@
 	$: {
 		if (typeof localStorage !== 'undefined') {
 			console.log({ layers });
-			localStorage.setItem('savedData', JSON.stringify({ layers, x, y, backgroundColor }));
+			localStorage.setItem(
+				'savedData',
+				JSON.stringify({ layers, x, y, backgroundColor, paddingX, paddingY })
+			);
 		}
 	}
 
@@ -115,6 +118,8 @@
 							bind:previewed
 							bind:undoStack
 							{backgroundColor}
+							{paddingX}
+							{paddingY}
 						/>
 						<Optimizer {layers} {activeCanvas} />
 					{/if}
@@ -123,6 +128,7 @@
 					<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
 						<BackgroundControl bind:backgroundColor bind:backgroundColorActive />
 						<DimensionControls bind:x bind:y bind:layers />
+						<PaddingControl bind:paddingX bind:paddingY />
 						<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
 						<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">
 							<button
