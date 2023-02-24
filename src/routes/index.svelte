@@ -128,8 +128,8 @@
 				</div>
 				<div class="sidebar">
 					<div class="container bg-dark flex flex-col py-8 px-2 gap-8">
-						<BackgroundControl bind:backgroundColor bind:backgroundColorActive />
 						<DimensionControls bind:x bind:y bind:layers />
+						<BackgroundControl bind:backgroundColor bind:backgroundColorActive />
 						<PaddingControl bind:paddingX bind:paddingY />
 						<Palette bind:layers bind:selectedPaletteIndex {activeCanvas} />
 						<div class="flex flex-row gap-4 justify-start items-start text-xxs px-2">
