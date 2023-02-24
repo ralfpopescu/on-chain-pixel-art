@@ -56,7 +56,7 @@
 	class="border-8 border-dark"
 	style={`display: grid; grid-template-rows: repeat(${yDim}, 20px); grid-template-columns: repeat(${xDim}, 20px); max-height: ${
 		(yDim + paddingY * 2) * 20 + 16
-	}px; background-color: rgba(255, 255, 255, 0.5); ${paddingStyle}`}
+	}px; background-color: ${backgroundColor}; ${paddingStyle}`}
 >
 	{#each canvas as color, i}
 		<Pixel
