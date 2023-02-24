@@ -4,6 +4,12 @@
 	export let y;
 </script>
 
-<div>
+<div class="container">
 	{JSON.stringify({ layers, x, y }, null, 4)}
 </div>
+
+<style>
+	.container {
+		word-break: break-all;
+	}
+</style>

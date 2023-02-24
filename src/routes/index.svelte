@@ -64,14 +64,19 @@
 	let undoStack: Layer[][] = [];
 	let redoStack: Layer[][] = [];
 
+	let timer;
+
 	$: {
-		if (typeof localStorage !== 'undefined') {
-			console.log({ layers });
-			localStorage.setItem(
-				'savedData',
-				JSON.stringify({ layers, x, y, backgroundColor, paddingX, paddingY })
-			);
-		}
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			if (typeof localStorage !== 'undefined') {
+				console.log('saving');
+				localStorage.setItem(
+					'savedData',
+					JSON.stringify({ layers, x, y, backgroundColor, paddingX, paddingY })
+				);
+			}
+		}, 1000);
 	}
 
 	$: selectedPaletteIndex = 1;
